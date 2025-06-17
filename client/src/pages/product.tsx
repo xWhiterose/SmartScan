@@ -1,12 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import { useLocation } from 'wouter';
-import { ArrowLeft, Share2, QrCode, PieChart, ThumbsUp, AlertTriangle } from 'lucide-react';
+import { ArrowLeft, Share2, QrCode, PieChart, ThumbsUp, AlertTriangle, Leaf, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { NutriScore } from '@/components/nutri-score';
 import { NutritionalInfo } from '@/components/nutritional-info';
 import { LoadingOverlay } from '@/components/loading-overlay';
 import { fetchProductByBarcode } from '@/lib/open-food-facts';
+import { cn } from '@/lib/utils';
 
 interface ProductPageProps {
   params: {
@@ -17,10 +18,14 @@ interface ProductPageProps {
 export default function Product({ params }: ProductPageProps) {
   const [, setLocation] = useLocation();
   const { barcode } = params;
+  
+  // Get scan type from URL query parameters
+  const urlParams = new URLSearchParams(window.location.search);
+  const scanType = (urlParams.get('type') as 'food' | 'pet') || 'food';
 
   const { data: product, isLoading, error } = useQuery({
-    queryKey: ['/api/product', barcode],
-    queryFn: () => fetchProductByBarcode(barcode),
+    queryKey: ['/api/product', barcode, scanType],
+    queryFn: () => fetchProductByBarcode(barcode, scanType),
     enabled: !!barcode,
   });
 
@@ -41,6 +46,10 @@ export default function Product({ params }: ProductPageProps) {
       });
     }
   };
+
+  const themeColor = scanType === 'pet' ? 'bg-scan-pet' : 'bg-scan-nutri';
+  const themeIcon = scanType === 'pet' ? Heart : Leaf;
+  const ThemeIcon = themeIcon;
 
   if (error) {
     return (
@@ -122,20 +131,31 @@ export default function Product({ params }: ProductPageProps) {
               </div>
               
               {/* Health Advice */}
-              <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
+              <div className={cn(
+                "border rounded-xl p-4",
+                scanType === 'pet' 
+                  ? "bg-orange-50 border-orange-200" 
+                  : "bg-emerald-50 border-emerald-200"
+              )}>
                 <div className="flex items-start space-x-3">
-                  <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <ThumbsUp className="text-primary-foreground w-4 h-4" />
+                  <div className={cn("w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5", themeColor)}>
+                    <ThumbsUp className="text-white w-4 h-4" />
                   </div>
                   <div>
-                    <h4 className="font-medium text-emerald-800 mb-1">
+                    <h4 className={cn(
+                      "font-medium mb-1",
+                      scanType === 'pet' ? "text-orange-800" : "text-emerald-800"
+                    )}>
                       {product.nutriscoreGrade === 'A' || product.nutriscoreGrade === 'B' 
                         ? 'Excellent choix !' 
                         : product.nutriscoreGrade === 'C' 
                         ? 'Choix correct' 
                         : 'À consommer avec modération'}
                     </h4>
-                    <p className="text-emerald-700 text-sm leading-relaxed">
+                    <p className={cn(
+                      "text-sm leading-relaxed",
+                      scanType === 'pet' ? "text-orange-700" : "text-emerald-700"
+                    )}>
                       {product.healthAdvice}
                     </p>
                   </div>
@@ -148,8 +168,8 @@ export default function Product({ params }: ProductPageProps) {
           <Card className="mx-4 mb-6">
             <CardContent className="p-6">
               <h3 className="text-lg font-semibold text-slate-800 mb-4 flex items-center">
-                <PieChart className="text-blue-500 w-5 h-5 mr-2" />
-                Informations Nutritionnelles
+                <PieChart className={cn("w-5 h-5 mr-2", scanType === 'pet' ? "text-scan-pet" : "text-blue-500")} />
+                {scanType === 'pet' ? 'Informations Nutritionnelles Animal' : 'Informations Nutritionnelles'}
               </h3>
               
               <NutritionalInfo 
@@ -163,7 +183,11 @@ export default function Product({ params }: ProductPageProps) {
 
           {/* Action Buttons */}
           <div className="px-4 pb-safe">
-            <Button onClick={handleNewScan} className="w-full mb-3" size="lg">
+            <Button 
+              onClick={handleNewScan} 
+              className={cn("w-full mb-3", themeColor, "hover:opacity-90")} 
+              size="lg"
+            >
               <QrCode className="w-5 h-5 mr-3" />
               Scanner un autre produit
             </Button>

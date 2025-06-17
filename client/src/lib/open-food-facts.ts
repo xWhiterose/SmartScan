@@ -1,7 +1,7 @@
 import { ProductData, NutritionalData } from '@shared/schema';
 
-export async function fetchProductByBarcode(barcode: string): Promise<ProductData> {
-  const response = await fetch(`/api/product/${barcode}`);
+export async function fetchProductByBarcode(barcode: string, type: 'food' | 'pet' = 'food'): Promise<ProductData> {
+  const response = await fetch(`/api/product/${barcode}?type=${type}`);
   
   if (!response.ok) {
     if (response.status === 404) {
@@ -25,5 +25,6 @@ export async function fetchProductByBarcode(barcode: string): Promise<ProductDat
       proteins: data.proteins || 0,
     },
     healthAdvice: data.healthAdvice,
+    type: data.type || type,
   };
 }
