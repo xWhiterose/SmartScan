@@ -37,11 +37,11 @@ export function BarcodeScanner({ onScanSuccess, onScanError, scanMode }: Barcode
   const getScanIcon = () => {
     switch (scanMode) {
       case 'pet':
-        return <PawPrint className="w-8 h-8 mb-2" />;
+        return <PawPrint className="w-full h-full" />;
       case 'cosmetic':
-        return <Sparkles className="w-8 h-8 mb-2" />;
+        return <Sparkles className="w-full h-full" />;
       default:
-        return <Utensils className="w-8 h-8 mb-2" />;
+        return <Utensils className="w-full h-full" />;
     }
   };
 
@@ -60,17 +60,34 @@ export function BarcodeScanner({ onScanSuccess, onScanError, scanMode }: Barcode
       {/* Scanner overlay */}
       <div className="absolute inset-0 flex items-center justify-center">
         {!showCamera ? (
-          /* Central start button */
-          <Button
-            onClick={handleStartScan}
-            className={cn(
-              "w-32 h-32 rounded-full flex flex-col items-center justify-center text-white font-semibold text-lg shadow-2xl hover:scale-105 transition-transform",
-              bgThemeClass
-            )}
-          >
-            {getScanIcon()}
-            <span>Scan</span>
-          </Button>
+          /* Central start button with ripple effect */
+          <div className="relative">
+            <Button
+              onClick={handleStartScan}
+              className={cn(
+                "w-32 h-32 rounded-full flex flex-col items-center justify-center text-white font-semibold text-lg shadow-2xl hover:scale-105 transition-all duration-300 relative overflow-hidden group",
+                bgThemeClass
+              )}
+            >
+              {/* Ripple effect */}
+              <div className={cn(
+                "absolute inset-0 rounded-full opacity-30 animate-ping",
+                bgThemeClass.replace('bg-', 'bg-opacity-30 bg-')
+              )}></div>
+              <div className={cn(
+                "absolute inset-0 rounded-full opacity-20 animate-pulse",
+                bgThemeClass.replace('bg-', 'bg-opacity-20 bg-')
+              )} style={{ animationDelay: '1s' }}></div>
+              
+              {/* Content */}
+              <div className="relative z-10 flex flex-col items-center">
+                <div className="w-12 h-12 mb-1 flex items-center justify-center">
+                  {getScanIcon()}
+                </div>
+                <span>Scan</span>
+              </div>
+            </Button>
+          </div>
         ) : (
           /* Scanning frame with inset video */
           <div className="relative w-80 h-60 rounded-2xl overflow-hidden border-4 border-white/50 shadow-2xl">

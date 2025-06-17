@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { BarcodeScanner } from '@/components/barcode-scanner';
 import { LoadingOverlay } from '@/components/loading-overlay';
 import { useLocation } from 'wouter';
-import { Utensils, PawPrint, Sparkles, Scan } from 'lucide-react';
+import { Utensils, PawPrint, Sparkles, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -32,12 +32,12 @@ export default function Scanner() {
       <header className="bg-card/95 backdrop-blur-sm shadow-sm border-b border-border sticky top-0 z-40">
         <div className="px-4 py-3">
           <div className="flex items-center justify-between">
-            {/* Fake Brand Logo */}
+            {/* Brand Logo */}
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-r from-scan-nutri to-scan-pet rounded-lg flex items-center justify-center">
-                <Scan className="w-5 h-5 text-white" />
+              <div className="w-8 h-8 bg-gradient-to-br from-orange-500 via-red-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg">
+                <Zap className="w-5 h-5 text-white" />
               </div>
-              <span className="text-lg font-bold text-foreground">ScanWise</span>
+              <span className="text-lg font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">QuickScan</span>
             </div>
 
             {/* Mode Toggle Buttons */}

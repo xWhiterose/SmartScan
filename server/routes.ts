@@ -77,18 +77,18 @@ function generateCosmeticHealthAdvice(product: any): string {
   const name = product.name.toLowerCase();
   
   if (name.includes('bio') || name.includes('organic') || name.includes('naturel')) {
-    return "Excellent choix ! Ce produit contient des ingrédients naturels et biologiques, idéal pour une routine beauté respectueuse de votre peau.";
+    return "Excellent choice! This product contains natural and organic ingredients, ideal for a skin-friendly beauty routine.";
   } else if (name.includes('sensitive') || name.includes('sensible') || name.includes('hypoallergenic')) {
-    return "Parfait pour les peaux sensibles ! Ce produit est formulé pour minimiser les risques d'irritation.";
+    return "Perfect for sensitive skin! This product is formulated to minimize irritation risks.";
   } else if (name.includes('spf') || name.includes('sun') || name.includes('solaire')) {
-    return "Protection solaire essentielle ! N'oubliez pas d'appliquer généreusement et de renouveler régulièrement.";
+    return "Essential sun protection! Remember to apply generously and reapply regularly.";
   } else if (name.includes('anti-age') || name.includes('anti-aging') || name.includes('rides')) {
-    return "Soin anti-âge efficace ! Utilisez régulièrement pour des résultats optimaux sur les signes de l'âge.";
+    return "Effective anti-aging care! Use regularly for optimal results on aging signs.";
   } else if (name.includes('hydrat') || name.includes('moistur')) {
-    return "Hydratation optimale ! Ce produit aide à maintenir l'équilibre hydrique de votre peau.";
+    return "Optimal hydration! This product helps maintain your skin's moisture balance.";
   }
   
-  return "Vérifiez la liste des ingrédients pour vous assurer qu'ils conviennent à votre type de peau et à vos besoins.";
+  return "Check the ingredients list to ensure they suit your skin type and needs.";
 }
 
 function generatePetHealthAdvice(product: any): string {
@@ -96,25 +96,25 @@ function generatePetHealthAdvice(product: any): string {
   const name = product.name.toLowerCase();
   
   if (grade === 'A') {
-    return "Excellent choix pour votre animal ! Ce produit présente une composition nutritionnelle optimale.";
+    return "Excellent choice for your pet! This product has an optimal nutritional composition.";
   } else if (grade === 'B') {
-    return "Bon choix ! Ce produit convient bien à l'alimentation de votre animal de compagnie.";
+    return "Good choice! This product is suitable for your pet's diet.";
   } else if (grade === 'C') {
-    return "Qualité correcte. Peut faire partie d'une alimentation équilibrée pour votre animal.";
+    return "Decent quality. Can be part of a balanced diet for your pet.";
   } else if (grade === 'D') {
-    return "Attention ! Ce produit présente des déséquilibres nutritionnels. À limiter dans l'alimentation de votre animal.";
+    return "Caution! This product has nutritional imbalances. Should be limited in your pet's diet.";
   } else if (grade === 'E') {
-    return "Produit de faible qualité nutritionnelle. Non recommandé pour l'alimentation régulière de votre animal.";
+    return "Poor nutritional quality. Not recommended for regular feeding.";
   }
   
   // Default advice based on nutritional content for pets
   if (product.proteins > 25) {
-    return "Riche en protéines ! Idéal pour le développement musculaire de votre animal.";
+    return "High in protein! Ideal for your pet's muscle development.";
   } else if (product.fat > 15) {
-    return "Attention au taux de matières grasses. Vérifiez que cela convient au niveau d'activité de votre animal.";
+    return "Watch the fat content. Check if this suits your pet's activity level.";
   }
   
-  return "Vérifiez que ce produit correspond aux besoins spécifiques de votre animal de compagnie.";
+  return "Verify that this product meets your pet's specific dietary needs.";
 }
 
 function generateHealthAdvice(product: any, scanType: 'food' | 'pet' | 'cosmetic' = 'food'): string {
