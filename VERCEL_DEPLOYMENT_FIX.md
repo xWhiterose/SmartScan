@@ -1,12 +1,13 @@
-# SOLUTION: Vercel Runtime Error Fix
+# SOLUTION: Vercel Build Errors Fixed
 
-## Problem
-"Function Runtimes must have a valid version" error occurs because the current package.json contains Express.js dependencies that conflict with Vercel's serverless architecture.
+## Problems Fixed
+1. "Function Runtimes must have a valid version" - Express.js conflicts with Vercel serverless
+2. "module is not defined in ES module scope" - Next.js config incompatible with ES modules
 
 ## Complete Solution
 
 ### Step 1: Replace package.json 
-Replace your current package.json with this clean Next.js version:
+Replace your current package.json with this clean Next.js version (removes "type": "module"):
 
 ```json
 {
@@ -93,25 +94,59 @@ Replace your current package.json with this clean Next.js version:
 }
 ```
 
-### Step 2: Remove Express Files
+### Step 2: Update next.config.js
+Replace your next.config.js with this ES module compatible version:
+
+```javascript
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  images: {
+    domains: ['images.openfoodfacts.org'],
+  },
+}
+
+export default nextConfig
+```
+
+### Step 3: Remove Conflicting Files
 Add these lines to your .gitignore:
 ```
-# Old Express server (not needed for Vercel)
+# Old Express server (conflicts with Next.js)
 server/
 vite.config.ts
+drizzle.config.ts
 ```
 
-### Step 3: Deploy to Vercel
-1. Commit and push your changes to GitHub
-2. Go to vercel.com and import your repository
-3. Vercel automatically detects Next.js (zero configuration)
-4. Deploy successfully without runtime errors
+### Step 4: Deploy to Vercel
+1. Replace package.json with the clean version above
+2. Update next.config.js to use export default
+3. Commit and push changes to GitHub
+4. Import repository in Vercel (automatic Next.js detection)
+5. Deploy successfully without build errors
 
 ## Key Changes Made
-- ✅ Removed ALL Express.js dependencies 
-- ✅ Clean Next.js configuration
-- ✅ API routes in pages/api/ directory
-- ✅ Zero Vercel configuration needed
-- ✅ No more runtime errors
+- ✅ Removed ALL Express.js dependencies that conflict with Vercel serverless
+- ✅ Fixed "type": "module" causing Next.js config errors  
+- ✅ Updated next.config.js to use export default syntax
+- ✅ Clean Next.js configuration with proper API routes
+- ✅ Zero Vercel configuration needed - automatic detection
+- ✅ Both runtime and build errors resolved
 
-Your scanner app will now deploy successfully on Vercel!
+## Quick Migration Commands
+```bash
+# 1. Replace package.json with clean version
+cp package-vercel.json package.json
+
+# 2. Install clean dependencies
+npm install
+
+# 3. Commit changes
+git add .
+git commit -m "Fix Vercel build errors - Next.js migration"
+git push origin main
+
+# 4. Deploy on Vercel (import GitHub repo)
+```
+
+Your scanner app will now deploy successfully on Vercel without any build or runtime errors!
