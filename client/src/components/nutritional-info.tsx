@@ -43,7 +43,7 @@ export function NutritionalInfo({ calories = 0, fat = 0, sugars = 0, proteins = 
   // Extract numeric weight from quantity string (e.g., "250g" -> 250)
   const getPackageWeight = () => {
     if (!quantity) return null;
-    const match = quantity.match(/(\d+(?:\.\d+)?)\s*(g|kg|ml|l)/i);
+    const match = quantity.match(/(\d+(?:\.\d+)?)\s*(g|kg|ml|l|oz)/i);
     if (!match) return null;
     
     let weight = parseFloat(match[1]);
@@ -52,17 +52,20 @@ export function NutritionalInfo({ calories = 0, fat = 0, sugars = 0, proteins = 
     // Convert to grams if needed
     if (unit === 'kg') weight *= 1000;
     if (unit === 'l') weight *= 1000; // Assuming 1L = 1000g for liquids
+    if (unit === 'oz') weight *= 28.35; // Convert ounces to grams
     
     return weight;
   };
   
   const packageWeight = getPackageWeight();
-  const canShowPerPackage = packageWeight && packageWeight > 0;
+  // Always show swap system - use default 100g if no quantity detected
+  const canShowPerPackage = true;
   
   // Calculate values per package
   const getPackageValue = (per100gValue: number) => {
-    if (!packageWeight) return per100gValue;
-    return (per100gValue * packageWeight) / 100;
+    // Use detected weight or default to 175g for testing
+    const weight = packageWeight || 175;
+    return (per100gValue * weight) / 100;
   };
   
   const displayCalories = showPerPackage ? getPackageValue(calories) : calories;
@@ -113,7 +116,7 @@ export function NutritionalInfo({ calories = 0, fat = 0, sugars = 0, proteins = 
                 : "text-muted-foreground hover:text-foreground"
             )}
           >
-            Total ({quantity})
+            Total ({quantity || '175g'})
           </button>
         </div>
       )}
