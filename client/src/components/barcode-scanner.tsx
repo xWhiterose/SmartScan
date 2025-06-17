@@ -38,11 +38,11 @@ export function BarcodeScanner({ onScanSuccess, onScanError, scanMode }: Barcode
   const getScanIcon = () => {
     switch (scanMode) {
       case 'pet':
-        return <PawPrint className="w-full h-full" />;
+        return <PawPrint className="w-20 h-20" />;
       case 'cosmetic':
-        return <Sparkles className="w-full h-full" />;
+        return <Sparkles className="w-20 h-20" />;
       default:
-        return <Utensils className="w-full h-full" />;
+        return <Utensils className="w-20 h-20" />;
     }
   };
 
@@ -63,19 +63,19 @@ export function BarcodeScanner({ onScanSuccess, onScanError, scanMode }: Barcode
         {!showCamera ? (
           /* Central start button with ripple effect */
           <div className="relative flex flex-col items-center">
-            {/* Ripple effect layers */}
+            {/* Enhanced ripple effect layers - more pronounced */}
             <div className={cn(
-              "absolute w-32 h-32 rounded-full opacity-20 animate-ping",
+              "absolute w-48 h-48 rounded-full opacity-40 animate-ping",
               bgThemeClass
-            )} style={{ animationDuration: '2s' }}></div>
+            )} style={{ animationDuration: '1.5s' }}></div>
             <div className={cn(
-              "absolute w-40 h-40 rounded-full opacity-15 animate-ping",
+              "absolute w-64 h-64 rounded-full opacity-30 animate-ping",
               bgThemeClass
-            )} style={{ animationDuration: '3s', animationDelay: '0.5s' }}></div>
+            )} style={{ animationDuration: '2s', animationDelay: '0.3s' }}></div>
             <div className={cn(
-              "absolute w-48 h-48 rounded-full opacity-10 animate-ping",
+              "absolute w-80 h-80 rounded-full opacity-20 animate-ping",
               bgThemeClass
-            )} style={{ animationDuration: '4s', animationDelay: '1s' }}></div>
+            )} style={{ animationDuration: '2.5s', animationDelay: '0.6s' }}></div>
             
             <Button
               onClick={handleStartScan}
@@ -84,7 +84,7 @@ export function BarcodeScanner({ onScanSuccess, onScanError, scanMode }: Barcode
                 bgThemeClass
               )}
             >
-              <div className="w-16 h-16 flex items-center justify-center">
+              <div className="w-24 h-24 flex items-center justify-center">
                 {getScanIcon()}
               </div>
             </Button>
@@ -92,14 +92,14 @@ export function BarcodeScanner({ onScanSuccess, onScanError, scanMode }: Barcode
             {/* "Scan me" text below button */}
             <span className={cn(
               "mt-4 text-lg font-semibold",
-              scanMode === 'pet' ? 'text-scan-pet' : scanMode === 'cosmetic' ? 'text-scan-cosmetic' : 'text-scan-nutri'
+              textThemeClass
             )}>
               Scan me
             </span>
           </div>
         ) : (
-          /* Scanning frame with inset video */
-          <div className="relative flex flex-col items-center">
+          /* Scanning frame with inset video positioned under status */
+          <div className="relative flex flex-col items-center mt-16">
             <div className="relative w-80 h-60 rounded-2xl overflow-hidden border-4 border-white/50 shadow-2xl">
               {/* Video stream only in the scan area */}
               <video
@@ -124,13 +124,13 @@ export function BarcodeScanner({ onScanSuccess, onScanError, scanMode }: Barcode
             <div className="mt-6 text-center">
               <p className={cn(
                 "text-lg font-medium mb-2",
-                scanMode === 'pet' ? 'text-scan-pet' : scanMode === 'cosmetic' ? 'text-scan-cosmetic' : 'text-scan-nutri'
+                textThemeClass
               )}>
                 Point camera at barcode
               </p>
               <p className={cn(
                 "text-sm opacity-80",
-                scanMode === 'pet' ? 'text-scan-pet' : scanMode === 'cosmetic' ? 'text-scan-cosmetic' : 'text-scan-nutri'
+                textThemeClass
               )}>
                 Scanning {scanMode === 'pet' ? 'pet' : scanMode === 'cosmetic' ? 'beauty' : 'food'} products
               </p>

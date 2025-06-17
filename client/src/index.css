@@ -93,8 +93,8 @@
     color: var(--scan-pet);
   }
   
-  .bg-scan-nutri {
-    background-color: var(--scan-nutri);
+  .bg-scan-food {
+    background-color: var(--scan-food);
   }
   .bg-scan-pet {
     background-color: var(--scan-pet);
@@ -103,8 +103,8 @@
     background-color: var(--scan-cosmetic);
   }
   
-  .border-scan-nutri {
-    border-color: var(--scan-nutri);
+  .border-scan-food {
+    border-color: var(--scan-food);
   }
   .border-scan-pet {
     border-color: var(--scan-pet);
@@ -113,7 +113,13 @@
     border-color: var(--scan-cosmetic);
   }
   
-  .scan-cosmetic {
+  .text-scan-food {
+    color: var(--scan-food);
+  }
+  .text-scan-pet {
+    color: var(--scan-pet);
+  }
+  .text-scan-cosmetic {
     color: var(--scan-cosmetic);
   }
 }
