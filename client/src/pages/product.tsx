@@ -92,15 +92,15 @@ export default function Product({ params }: ProductPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-background">
       <LoadingOverlay isVisible={isLoading} />
       
       {product && (
         <>
           {/* Product Header */}
-          <div className="bg-white">
+          <div className="bg-card">
             {/* Product Image */}
-            <div className="relative h-64 bg-gradient-to-br from-slate-100 to-slate-200">
+            <div className="relative h-64 bg-gradient-to-br from-muted to-background">
               {product.imageUrl ? (
                 <img 
                   src={product.imageUrl} 
@@ -117,7 +117,7 @@ export default function Product({ params }: ProductPageProps) {
               <Button
                 onClick={handleBackToScanner}
                 size="icon"
-                className="absolute top-4 left-4 w-10 h-10 bg-white/90 hover:bg-white text-slate-700 backdrop-blur-sm shadow-lg"
+                className="absolute top-4 left-4 w-10 h-10 bg-card/90 hover:bg-card text-foreground backdrop-blur-sm shadow-lg"
               >
                 <ArrowLeft className="w-4 h-4" />
               </Button>
@@ -125,11 +125,11 @@ export default function Product({ params }: ProductPageProps) {
 
             {/* Product Title */}
             <div className="p-6 pb-4">
-              <h2 className="text-2xl font-bold text-slate-800 leading-tight">
+              <h2 className="text-2xl font-bold text-foreground leading-tight">
                 {product.name}
               </h2>
               {product.brand && (
-                <p className="text-slate-600 mt-1">{product.brand}</p>
+                <p className="text-muted-foreground mt-1">{product.brand}</p>
               )}
             </div>
           </div>
@@ -138,7 +138,7 @@ export default function Product({ params }: ProductPageProps) {
           <Card className="mx-4 mb-4">
             <CardContent className="p-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-slate-800">Score Nutritionnel</h3>
+                <h3 className="text-lg font-semibold text-foreground">Nutritional Score</h3>
                 <NutriScore grade={product.nutriscoreGrade} />
               </div>
               
@@ -162,12 +162,12 @@ export default function Product({ params }: ProductPageProps) {
                       scanType === 'cosmetic' ? "text-pink-800" : 
                       "text-emerald-800"
                     )}>
-                      {scanType === 'cosmetic' ? 'Produit beauté analysé' :
+                      {scanType === 'cosmetic' ? 'Beauty product analyzed' :
                        product.nutriscoreGrade === 'A' || product.nutriscoreGrade === 'B' 
-                        ? 'Excellent choix !' 
+                        ? 'Excellent choice!' 
                         : product.nutriscoreGrade === 'C' 
-                        ? 'Choix correct' 
-                        : 'À consommer avec modération'}
+                        ? 'Good choice' 
+                        : 'Consume with moderation'}
                     </h4>
                     <p className={cn(
                       "text-sm leading-relaxed",
