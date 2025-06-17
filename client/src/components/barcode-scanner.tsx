@@ -38,11 +38,11 @@ export function BarcodeScanner({ onScanSuccess, onScanError, scanMode }: Barcode
   const getScanIcon = () => {
     switch (scanMode) {
       case 'pet':
-        return <PawPrint className="w-20 h-20" />;
+        return <PawPrint className="w-full h-full" />;
       case 'cosmetic':
-        return <Sparkles className="w-20 h-20" />;
+        return <Sparkles className="w-full h-full" />;
       default:
-        return <Utensils className="w-20 h-20" />;
+        return <Utensils className="w-full h-full" />;
     }
   };
 
@@ -59,49 +59,48 @@ export function BarcodeScanner({ onScanSuccess, onScanError, scanMode }: Barcode
       </div>
       
       {/* Scanner overlay */}
-      <div className="absolute inset-0 flex items-center justify-center pt-16">
+      <div className="absolute inset-0 flex items-center justify-center pt-8">
         {!showCamera ? (
           /* Central start button with ripple effect */
           <div className="relative flex flex-col items-center">
-            {/* Enhanced ripple effect layers - more pronounced */}
-            <div className={cn(
-              "absolute w-48 h-48 rounded-full opacity-40 animate-ping",
-              bgThemeClass
-            )} style={{ animationDuration: '1.5s' }}></div>
-            <div className={cn(
-              "absolute w-64 h-64 rounded-full opacity-30 animate-ping",
-              bgThemeClass
-            )} style={{ animationDuration: '2s', animationDelay: '0.3s' }}></div>
-            <div className={cn(
-              "absolute w-80 h-80 rounded-full opacity-20 animate-ping",
-              bgThemeClass
-            )} style={{ animationDuration: '2.5s', animationDelay: '0.6s' }}></div>
-            
-            <Button
-              onClick={handleStartScan}
-              className={cn(
-                "w-32 h-32 rounded-full flex items-center justify-center text-white shadow-2xl hover:scale-110 transition-all duration-300 relative z-10 p-0",
+            {/* Enhanced ripple effect layers centered on button only */}
+            <div className="relative">
+              <div className={cn(
+                "absolute w-48 h-48 rounded-full opacity-40 animate-ping -top-24 -left-24",
                 bgThemeClass
-              )}
-            >
-              <div className="w-24 h-24 flex items-center justify-center">
+              )} style={{ animationDuration: '1.5s' }}></div>
+              <div className={cn(
+                "absolute w-64 h-64 rounded-full opacity-30 animate-ping -top-32 -left-32",
+                bgThemeClass
+              )} style={{ animationDuration: '2s', animationDelay: '0.3s' }}></div>
+              <div className={cn(
+                "absolute w-80 h-80 rounded-full opacity-20 animate-ping -top-40 -left-40",
+                bgThemeClass
+              )} style={{ animationDuration: '2.5s', animationDelay: '0.6s' }}></div>
+              
+              <Button
+                onClick={handleStartScan}
+                className={cn(
+                  "w-28 h-28 rounded-full flex items-center justify-center text-white shadow-2xl hover:scale-110 transition-all duration-300 relative z-10 p-0",
+                  bgThemeClass
+                )}
+              >
                 {getScanIcon()}
-              </div>
-            </Button>
+              </Button>
+            </div>
             
             {/* "Scan me" text below button */}
             <span className={cn(
-              "mt-4 text-lg font-semibold",
+              "mt-4 text-base font-semibold",
               textThemeClass
             )}>
               Scan me
             </span>
           </div>
         ) : (
-          /* Scanning frame with inset video positioned under status */
-          <div className="relative flex flex-col items-center mt-16">
-            <div className="relative w-80 h-60 rounded-2xl overflow-hidden border-4 border-white/50 shadow-2xl">
-              {/* Video stream only in the scan area */}
+          /* Scanning frame with inset video positioned higher */
+          <div className="relative flex flex-col items-center -mt-8">
+            <div className="relative w-72 h-52 rounded-2xl overflow-hidden border-4 border-white/50 shadow-2xl">
               <video
                 ref={videoRef}
                 className="w-full h-full object-cover"
