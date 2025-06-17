@@ -30,11 +30,23 @@ export default function Product({ params }: ProductPageProps) {
   });
 
   const handleBackToScanner = () => {
-    setLocation('/');
+    if (scanType === 'pet') {
+      setLocation('/scanner?mode=pet');
+    } else if (scanType === 'cosmetic') {
+      setLocation('/scanner?mode=cosmetic');
+    } else {
+      setLocation('/scanner');
+    }
   };
 
   const handleNewScan = () => {
-    setLocation('/');
+    if (scanType === 'pet') {
+      setLocation('/scanner?mode=pet');
+    } else if (scanType === 'cosmetic') {
+      setLocation('/scanner?mode=cosmetic');
+    } else {
+      setLocation('/scanner');
+    }
   };
 
   const handleShare = () => {
