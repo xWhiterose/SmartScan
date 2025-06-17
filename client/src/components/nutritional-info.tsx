@@ -20,8 +20,8 @@ interface NutrientCardProps {
 
 function NutrientCard({ value, label, unit, isPerPackage }: NutrientCardProps) {
   return (
-    <div className="bg-slate-50 rounded-xl p-4 text-center">
-      <div className="text-2xl font-bold text-slate-800">
+    <div className="bg-slate-50 rounded-xl p-3 text-center">
+      <div className="text-xl font-bold text-slate-800">
         {value.toFixed(value < 1 ? 1 : 0)}{unit}
       </div>
       <div className="text-xs text-slate-600 font-medium mt-1 uppercase">
@@ -90,38 +90,89 @@ export function NutritionalInfo({ calories = 0, fat = 0, sugars = 0, proteins = 
   
   return (
     <div className="space-y-4">
-      {/* Swipe indicator */}
+      {/* View selector tabs */}
       {canShowPerPackage && (
-        <div className="flex justify-center items-center space-x-2 text-sm text-muted-foreground">
-          <ArrowLeftRight className="w-4 h-4" />
-          <span>Swipe to switch between 100g and total package values</span>
+        <div className="flex bg-muted rounded-lg p-1">
+          <button
+            onClick={() => setShowPerPackage(false)}
+            className={cn(
+              "flex-1 px-3 py-2 text-sm font-medium rounded-md transition-all duration-200",
+              !showPerPackage 
+                ? "bg-white text-foreground shadow-sm" 
+                : "text-muted-foreground hover:text-foreground"
+            )}
+          >
+            Per 100g
+          </button>
+          <button
+            onClick={() => setShowPerPackage(true)}
+            className={cn(
+              "flex-1 px-3 py-2 text-sm font-medium rounded-md transition-all duration-200",
+              showPerPackage 
+                ? "bg-white text-foreground shadow-sm" 
+                : "text-muted-foreground hover:text-foreground"
+            )}
+          >
+            Total ({quantity})
+          </button>
         </div>
       )}
       
-      {/* Nutritional cards with swipe support */}
-      <div 
-        ref={containerRef}
-        className={cn(
-          "grid grid-cols-2 gap-3 p-1 rounded-lg transition-all duration-300",
-          canShowPerPackage && "cursor-pointer select-none"
+      {/* Nutritional cards with horizontal scroll container */}
+      <div className="relative overflow-hidden rounded-lg">
+        <div 
+          ref={containerRef}
+          className={cn(
+            "transition-transform duration-300 ease-out flex",
+            canShowPerPackage && "cursor-pointer select-none"
+          )}
+          style={{
+            transform: showPerPackage ? 'translateX(-50%)' : 'translateX(0%)',
+            width: canShowPerPackage ? '200%' : '100%'
+          }}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          {/* Per 100g view */}
+          <div className="w-full grid grid-cols-2 gap-3 p-1" style={{ width: canShowPerPackage ? '50%' : '100%', flexShrink: 0 }}>
+            <NutrientCard value={calories} label="Calories" unit="" isPerPackage={false} />
+            <NutrientCard value={fat} label="Fat" unit="g" isPerPackage={false} />
+            <NutrientCard value={sugars} label="Sugars" unit="g" isPerPackage={false} />
+            <NutrientCard value={proteins} label="Proteins" unit="g" isPerPackage={false} />
+          </div>
+          
+          {/* Per package view */}
+          {canShowPerPackage && (
+            <div className="w-full grid grid-cols-2 gap-3 p-1" style={{ width: '50%', flexShrink: 0 }}>
+              <NutrientCard value={getPackageValue(calories)} label="Calories" unit="" isPerPackage={true} />
+              <NutrientCard value={getPackageValue(fat)} label="Fat" unit="g" isPerPackage={true} />
+              <NutrientCard value={getPackageValue(sugars)} label="Sugars" unit="g" isPerPackage={true} />
+              <NutrientCard value={getPackageValue(proteins)} label="Proteins" unit="g" isPerPackage={true} />
+            </div>
+          )}
+        </div>
+        
+        {/* Visual indicators */}
+        {canShowPerPackage && (
+          <div className="flex justify-center space-x-2 mt-3">
+            <div className={cn(
+              "w-2 h-2 rounded-full transition-all duration-200",
+              !showPerPackage ? "bg-slate-400" : "bg-slate-200"
+            )}></div>
+            <div className={cn(
+              "w-2 h-2 rounded-full transition-all duration-200",
+              showPerPackage ? "bg-slate-400" : "bg-slate-200"
+            )}></div>
+          </div>
         )}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-        onClick={() => canShowPerPackage && setShowPerPackage(!showPerPackage)}
-      >
-        <NutrientCard value={displayCalories} label="Calories" unit="" isPerPackage={showPerPackage} />
-        <NutrientCard value={displayFat} label="Fat" unit="g" isPerPackage={showPerPackage} />
-        <NutrientCard value={displaySugars} label="Sugars" unit="g" isPerPackage={showPerPackage} />
-        <NutrientCard value={displayProteins} label="Proteins" unit="g" isPerPackage={showPerPackage} />
       </div>
 
-      {/* Current view indicator */}
+      {/* Swipe instruction */}
       {canShowPerPackage && (
-        <div className="text-center">
-          <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-muted text-muted-foreground">
-            {showPerPackage ? `Total package (${quantity})` : 'Per 100g'}
-          </div>
+        <div className="flex justify-center items-center space-x-2 text-xs text-muted-foreground">
+          <ArrowLeftRight className="w-3 h-3" />
+          <span>Swipe or tap tabs to switch views</span>
         </div>
       )}
     </div>

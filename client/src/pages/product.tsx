@@ -193,7 +193,7 @@ export default function Product({ params }: ProductPageProps) {
             <CardContent className="p-6">
               <h3 className="text-lg font-semibold text-slate-800 mb-4 flex items-center">
                 <PieChart className={cn("w-5 h-5 mr-2", scanType === 'pet' ? "text-scan-pet" : "text-blue-500")} />
-                {scanType === 'pet' ? 'Informations Nutritionnelles Animal' : 'Informations Nutritionnelles'}
+                {scanType === 'pet' ? 'Pet Nutritional Information' : 'Nutritional Information'}
               </h3>
               
               <NutritionalInfo 
@@ -214,7 +214,7 @@ export default function Product({ params }: ProductPageProps) {
               size="lg"
             >
               <QrCode className="w-5 h-5 mr-3" />
-              Scanner un autre produit
+              Scan another product
             </Button>
             
             <Button 
@@ -223,7 +223,7 @@ export default function Product({ params }: ProductPageProps) {
               className="w-full"
             >
               <Share2 className="w-4 h-4 mr-2" />
-              Partager ce produit
+              Share this product
             </Button>
           </div>
         </div>
