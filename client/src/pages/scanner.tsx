@@ -27,13 +27,13 @@ export default function Scanner() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col">
       {/* Header with dual mode buttons */}
-      <header className="bg-white shadow-sm border-b border-slate-200 sticky top-0 z-40">
+      <header className="bg-card/95 backdrop-blur-sm shadow-sm border-b border-border sticky top-0 z-40">
         <div className="px-4 py-3">
           <div className="flex items-center justify-between">
             {/* Mode Toggle Buttons */}
-            <div className="flex items-center space-x-1 bg-slate-100 rounded-xl p-1">
+            <div className="flex items-center space-x-1 bg-muted rounded-xl p-1">
               <Button
                 variant={scanMode === 'food' ? 'default' : 'ghost'}
                 size="sm"
@@ -42,7 +42,7 @@ export default function Scanner() {
                   "flex items-center space-x-2 transition-all duration-200 text-xs px-2",
                   scanMode === 'food' 
                     ? "bg-scan-nutri hover:bg-scan-nutri text-white shadow-md" 
-                    : "text-slate-600 hover:text-slate-800 hover:bg-slate-200"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                 )}
               >
                 <Leaf className="w-3 h-3" />
@@ -57,7 +57,7 @@ export default function Scanner() {
                   "flex items-center space-x-2 transition-all duration-200 text-xs px-2",
                   scanMode === 'pet' 
                     ? "bg-scan-pet hover:bg-scan-pet text-white shadow-md" 
-                    : "text-slate-600 hover:text-slate-800 hover:bg-slate-200"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                 )}
               >
                 <Heart className="w-3 h-3" />
@@ -72,7 +72,7 @@ export default function Scanner() {
                   "flex items-center space-x-2 transition-all duration-200 text-xs px-2",
                   scanMode === 'cosmetic' 
                     ? "bg-scan-cosmetic hover:bg-scan-cosmetic text-white shadow-md" 
-                    : "text-slate-600 hover:text-slate-800 hover:bg-slate-200"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                 )}
               >
                 <Sparkles className="w-3 h-3" />
@@ -94,7 +94,7 @@ export default function Scanner() {
                   <Leaf className="text-white w-4 h-4" />
                 )}
               </div>
-              <h1 className="text-xl font-semibold text-slate-800">
+              <h1 className="text-xl font-semibold text-foreground">
                 {scanMode === 'pet' ? 'PetScan' : scanMode === 'cosmetic' ? 'CosmeticScan' : 'NutriScan'}
               </h1>
             </div>
@@ -108,6 +108,18 @@ export default function Scanner() {
         onScanError={handleScanError}
         scanMode={scanMode}
       />
+
+      {/* Footer */}
+      <footer className="bg-card/95 backdrop-blur-sm border-t border-border px-4 py-3 mt-auto">
+        <div className="max-w-md mx-auto text-center">
+          <p className="text-muted-foreground text-sm">
+            Scanner de codes-barres intelligent
+          </p>
+          <p className="text-muted-foreground text-xs mt-1">
+            Alimentaire • Animaux • Cosmétiques
+          </p>
+        </div>
+      </footer>
 
       {/* Loading overlay */}
       <LoadingOverlay isVisible={isLoading} />
