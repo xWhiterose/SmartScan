@@ -53,7 +53,7 @@ export default function Product({ params }: ProductPageProps) {
     if (navigator.share && product) {
       navigator.share({
         title: product.name,
-        text: `Découvrez les informations nutritionnelles de ${product.name}`,
+        text: `Discover the nutritional information for ${product.name}`,
         url: window.location.href,
       });
     }

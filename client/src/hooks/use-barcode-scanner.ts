@@ -33,7 +33,16 @@ export function useBarcodeScanner(
       setError(null);
       setIsScanning(true);
 
-      // Get video devices
+      // Request camera permission first
+      await navigator.mediaDevices.getUserMedia({ 
+        video: { 
+          facingMode: { ideal: 'environment' },
+          width: { min: 640, ideal: 1280, max: 1920 },
+          height: { min: 480, ideal: 720, max: 1080 }
+        } 
+      });
+
+      // Get video devices after permission is granted
       const videoInputDevices = await navigator.mediaDevices.enumerateDevices();
       const cameras = videoInputDevices.filter(device => device.kind === 'videoinput');
       
@@ -44,7 +53,8 @@ export function useBarcodeScanner(
       // Prefer back camera for mobile devices
       const selectedDevice = cameras.find((device: MediaDeviceInfo) => 
         device.label.toLowerCase().includes('back') || 
-        device.label.toLowerCase().includes('rear')
+        device.label.toLowerCase().includes('rear') ||
+        device.label.toLowerCase().includes('environment')
       ) || cameras[0];
 
       // Start decoding
@@ -58,7 +68,20 @@ export function useBarcodeScanner(
         setIsScanning(false);
       }
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to start camera';
+      let errorMessage = 'Failed to start camera';
+      
+      if (err instanceof Error) {
+        if (err.message.includes('Permission denied') || err.name === 'NotAllowedError') {
+          errorMessage = 'Camera permission denied. Please allow camera access and try again.';
+        } else if (err.message.includes('No camera devices found') || err.name === 'NotFoundError') {
+          errorMessage = 'No camera found. Please check your device settings.';
+        } else if (err.name === 'NotSupportedError') {
+          errorMessage = 'Camera not supported on this device.';
+        } else {
+          errorMessage = err.message;
+        }
+      }
+      
       setError(errorMessage);
       setIsScanning(false);
       onScanError?.(errorMessage);

@@ -86,7 +86,7 @@ export function BarcodeScanner({ onScanSuccess, onScanError, scanMode }: Barcode
       <div className="absolute top-6 left-0 right-0 flex justify-center">
         <div className={cn("text-white px-4 py-2 rounded-full text-sm font-medium flex items-center space-x-2", bgThemeClass)}>
           <div className="w-2 h-2 bg-current rounded-full animate-pulse"></div>
-          <span>{isScanning ? 'Recherche en cours...' : 'Initialisation...'}</span>
+          <span>{isScanning ? 'Searching...' : 'Initializing...'}</span>
         </div>
       </div>
 
