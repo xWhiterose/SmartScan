@@ -66,15 +66,15 @@ export function BarcodeScanner({ onScanSuccess, onScanError, scanMode }: Barcode
             {/* Enhanced ripple effect layers centered on button only */}
             <div className="relative">
               <div className={cn(
-                "absolute w-48 h-48 rounded-full opacity-40 animate-ping -top-24 -left-24",
+                "absolute w-40 h-40 rounded-full opacity-40 animate-ping -top-20 -left-20",
                 bgThemeClass
               )} style={{ animationDuration: '1.5s' }}></div>
               <div className={cn(
-                "absolute w-64 h-64 rounded-full opacity-30 animate-ping -top-32 -left-32",
+                "absolute w-56 h-56 rounded-full opacity-30 animate-ping -top-28 -left-28",
                 bgThemeClass
               )} style={{ animationDuration: '2s', animationDelay: '0.3s' }}></div>
               <div className={cn(
-                "absolute w-80 h-80 rounded-full opacity-20 animate-ping -top-40 -left-40",
+                "absolute w-72 h-72 rounded-full opacity-20 animate-ping -top-36 -left-36",
                 bgThemeClass
               )} style={{ animationDuration: '2.5s', animationDelay: '0.6s' }}></div>
               
@@ -99,8 +99,8 @@ export function BarcodeScanner({ onScanSuccess, onScanError, scanMode }: Barcode
           </div>
         ) : (
           /* Scanning frame with inset video positioned higher */
-          <div className="relative flex flex-col items-center -mt-8">
-            <div className="relative w-72 h-52 rounded-2xl overflow-hidden border-4 border-white/50 shadow-2xl">
+          <div className="relative flex flex-col items-center -mt-16">
+            <div className="relative w-64 h-48 rounded-2xl overflow-hidden border-4 border-white/50 shadow-2xl">
               <video
                 ref={videoRef}
                 className="w-full h-full object-cover"
