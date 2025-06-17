@@ -96,6 +96,12 @@ products table:
 ## Changelog
 
 - June 17, 2025. Initial setup
+- June 17, 2025. Added dual-mode scanner system:
+  - Integrated NutriScan (green) for human food products via Open Food Facts API
+  - Added PetScan (orange) for pet food products via Open Pet Food Facts API
+  - Implemented color-coded interface with dynamic theming
+  - Created streamlined scanner interface without black container
+  - Added mode switching via header buttons with visual feedback
 
 ## User Preferences
 
