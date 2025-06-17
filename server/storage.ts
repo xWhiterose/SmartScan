@@ -33,6 +33,7 @@ export class MemStorage implements IStorage {
       fat: insertProduct.fat ?? null,
       sugars: insertProduct.sugars ?? null,
       proteins: insertProduct.proteins ?? null,
+      quantity: insertProduct.quantity ?? null,
       rawData: insertProduct.rawData ?? {}
     };
     this.products.set(insertProduct.barcode, product);

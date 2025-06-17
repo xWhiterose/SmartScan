@@ -196,6 +196,7 @@ export default function Product({ params }: ProductPageProps) {
                 fat={product.nutritionalData.fat}
                 sugars={product.nutritionalData.sugars}
                 proteins={product.nutritionalData.proteins}
+                quantity={product.quantity}
               />
             </CardContent>
           </Card>

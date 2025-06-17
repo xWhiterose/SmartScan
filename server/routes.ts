@@ -45,6 +45,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           brand: data.product.brands,
           imageUrl: data.product.image_url,
           nutriscoreGrade: data.product.nutriscore_grade?.toUpperCase(),
+          quantity: data.product.quantity,
           calories,
           fat,
           sugars,
