@@ -3,7 +3,7 @@ import { BrowserMultiFormatReader, NotFoundException } from '@zxing/library';
 
 export interface UseBarcodeScanner {
   isScanning: boolean;
-  startScanning: () => Promise<void>;
+  startScanning: (videoElement: HTMLVideoElement) => Promise<void>;
   stopScanning: () => void;
   error: string | null;
 }
@@ -15,7 +15,6 @@ export function useBarcodeScanner(
   const [isScanning, setIsScanning] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const codeReader = useRef<BrowserMultiFormatReader | null>(null);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
     codeReader.current = new BrowserMultiFormatReader();
@@ -27,7 +26,7 @@ export function useBarcodeScanner(
     };
   }, []);
 
-  const startScanning = async (): Promise<void> => {
+  const startScanning = async (videoElement: HTMLVideoElement): Promise<void> => {
     if (!codeReader.current) return;
 
     try {
@@ -35,22 +34,23 @@ export function useBarcodeScanner(
       setIsScanning(true);
 
       // Get video devices
-      const videoInputDevices = await BrowserMultiFormatReader.listVideoInputDevices();
+      const videoInputDevices = await navigator.mediaDevices.enumerateDevices();
+      const cameras = videoInputDevices.filter(device => device.kind === 'videoinput');
       
-      if (videoInputDevices.length === 0) {
+      if (cameras.length === 0) {
         throw new Error('No camera devices found');
       }
 
       // Prefer back camera for mobile devices
-      const selectedDevice = videoInputDevices.find(device => 
+      const selectedDevice = cameras.find((device: MediaDeviceInfo) => 
         device.label.toLowerCase().includes('back') || 
         device.label.toLowerCase().includes('rear')
-      ) || videoInputDevices[0];
+      ) || cameras[0];
 
       // Start decoding
       const result = await codeReader.current.decodeOnceFromVideoDevice(
         selectedDevice.deviceId,
-        videoRef.current!
+        videoElement
       );
 
       if (result) {

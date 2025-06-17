@@ -141,8 +141,8 @@ export default function Product({ params }: ProductPageProps) {
                   </div>
                 </div>
               </div>
-            </Card>
-          </div>
+            </CardContent>
+          </Card>
 
           {/* Nutritional Information */}
           <Card className="mx-4 mb-6">
