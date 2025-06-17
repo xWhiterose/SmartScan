@@ -1,13 +1,13 @@
-import { useQuery } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'wouter';
-import { ArrowLeft, Share2, QrCode, PieChart, ThumbsUp, AlertTriangle, Leaf, Heart, Sparkles } from 'lucide-react';
+import { ArrowLeft, QrCode, Share2, PieChart, ThumbsUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { LoadingOverlay } from '@/components/loading-overlay';
 import { NutriScore } from '@/components/nutri-score';
 import { NutritionalInfo } from '@/components/nutritional-info';
-import { LoadingOverlay } from '@/components/loading-overlay';
-import { fetchProductByBarcode } from '@/lib/open-food-facts';
 import { cn } from '@/lib/utils';
+import type { ProductData } from '@shared/schema';
 
 interface ProductPageProps {
   params: {
@@ -17,66 +17,70 @@ interface ProductPageProps {
 
 export default function Product({ params }: ProductPageProps) {
   const [, setLocation] = useLocation();
-  const { barcode } = params;
+  const [product, setProduct] = useState<ProductData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   
-  // Get scan type from URL query parameters
+  // Get scan type from URL params
   const urlParams = new URLSearchParams(window.location.search);
-  const scanType = (urlParams.get('type') as 'food' | 'pet' | 'cosmetic') || 'food';
+  const scanType = (urlParams.get('type') || 'food') as 'food' | 'pet' | 'cosmetic';
 
-  const { data: product, isLoading, error } = useQuery({
-    queryKey: ['/api/product', barcode, scanType],
-    queryFn: () => fetchProductByBarcode(barcode, scanType),
-    enabled: !!barcode,
-  });
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch(`/api/product/${params.barcode}?type=${scanType}`);
+        if (!response.ok) {
+          throw new Error('Product not found');
+        }
+        const productData = await response.json();
+        setProduct(productData);
+      } catch (err) {
+        console.error('Error fetching product:', err);
+        setError(err instanceof Error ? err.message : 'Unknown error');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (params.barcode) {
+      fetchProduct();
+    }
+  }, [params.barcode, scanType]);
 
   const handleBackToScanner = () => {
-    if (scanType === 'pet') {
-      setLocation('/scanner?mode=pet');
-    } else if (scanType === 'cosmetic') {
-      setLocation('/scanner?mode=cosmetic');
-    } else {
-      setLocation('/scanner');
-    }
+    setLocation('/');
   };
 
   const handleNewScan = () => {
-    if (scanType === 'pet') {
-      setLocation('/scanner?mode=pet');
-    } else if (scanType === 'cosmetic') {
-      setLocation('/scanner?mode=cosmetic');
-    } else {
-      setLocation('/scanner');
-    }
+    setLocation('/');
   };
 
-  const handleShare = () => {
+  const handleShare = async () => {
     if (navigator.share && product) {
-      navigator.share({
-        title: product.name,
-        text: `Discover the nutritional information for ${product.name}`,
-        url: window.location.href,
-      });
+      try {
+        await navigator.share({
+          title: product.name,
+          text: `Check out this product: ${product.name}`,
+          url: window.location.href,
+        });
+      } catch (err) {
+        console.log('Error sharing:', err);
+      }
     }
   };
 
-  const themeColor = scanType === 'pet' ? 'bg-scan-pet' : scanType === 'cosmetic' ? 'bg-scan-cosmetic' : 'bg-scan-nutri';
-  const themeIcon = scanType === 'pet' ? Heart : scanType === 'cosmetic' ? Sparkles : Leaf;
-  const ThemeIcon = themeIcon;
+  const themeColor = scanType === 'pet' ? 'bg-scan-pet' : scanType === 'cosmetic' ? 'bg-scan-cosmetic' : 'bg-scan-food';
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4 bg-background">
-        <Card className="max-w-sm w-full">
-          <CardContent className="p-8 text-center">
-            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <AlertTriangle className="text-red-500 w-8 h-8" />
-            </div>
-            
-            <h3 className="text-xl font-semibold text-foreground mb-2">
-              Product not found
-            </h3>
-            <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-              We couldn't identify this product. Make sure the barcode is clearly visible and try again.
+      <div className="h-screen bg-background flex items-center justify-center p-4">
+        <Card className="w-full max-w-md">
+          <CardContent className="p-6 text-center">
+            <PieChart className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+            <h2 className="text-xl font-semibold mb-2">Product Not Found</h2>
+            <p className="text-muted-foreground mb-6">
+              We couldn't find information for this barcode. The product might not be in our database yet.
             </p>
             
             <div className="space-y-3">
@@ -96,11 +100,11 @@ export default function Product({ params }: ProductPageProps) {
       <LoadingOverlay isVisible={isLoading} />
       
       {product && (
-        <>
+        <div className="flex flex-col h-full overflow-y-auto">
           {/* Product Header */}
-          <div className="bg-card">
+          <div className="bg-card flex-shrink-0">
             {/* Product Image */}
-            <div className="relative h-64 bg-gradient-to-br from-muted to-background">
+            <div className="relative h-40 bg-gradient-to-br from-muted to-background">
               {product.imageUrl ? (
                 <img 
                   src={product.imageUrl} 
@@ -131,22 +135,23 @@ export default function Product({ params }: ProductPageProps) {
               {product.brand && (
                 <p className="text-muted-foreground mt-1">{product.brand}</p>
               )}
+              
+              {/* Nutri-Score */}
+              {product.nutriscoreGrade && scanType !== 'cosmetic' && (
+                <div className="mt-4">
+                  <NutriScore grade={product.nutriscoreGrade} />
+                </div>
+              )}
             </div>
           </div>
 
-          {/* Nutri-Score Section */}
+          {/* Health Advice */}
           <Card className="mx-4 mb-4">
             <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-foreground">Nutritional Score</h3>
-                <NutriScore grade={product.nutriscoreGrade} />
-              </div>
-              
-              {/* Health Advice */}
               <div className={cn(
-                "border rounded-xl p-4",
+                "rounded-xl p-4 border-2",
                 scanType === 'pet' 
-                  ? "bg-orange-50 border-orange-200" 
+                  ? "bg-orange-50 border-orange-200"
                   : scanType === 'cosmetic'
                   ? "bg-pink-50 border-pink-200"
                   : "bg-emerald-50 border-emerald-200"
@@ -221,7 +226,7 @@ export default function Product({ params }: ProductPageProps) {
               Partager ce produit
             </Button>
           </div>
-        </>
+        </div>
       )}
     </div>
   );
