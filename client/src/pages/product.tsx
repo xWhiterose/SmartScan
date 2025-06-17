@@ -7,7 +7,7 @@ import { LoadingOverlay } from '@/components/loading-overlay';
 import { NutriScore } from '@/components/nutri-score';
 import { NutritionalInfo } from '@/components/nutritional-info';
 import { cn } from '@/lib/utils';
-import type { ProductData } from '@shared/schema';
+import type { ProductData } from '@/types/schema';
 
 interface ProductPageProps {
   params: {
