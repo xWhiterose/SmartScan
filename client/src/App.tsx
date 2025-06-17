@@ -11,6 +11,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Scanner} />
+      <Route path="/scanner" component={Scanner} />
       <Route path="/product/:barcode">
         {(params) => <Product params={params} />}
       </Route>

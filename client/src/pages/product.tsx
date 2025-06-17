@@ -65,24 +65,24 @@ export default function Product({ params }: ProductPageProps) {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-6 bg-slate-50">
+      <div className="min-h-screen flex items-center justify-center p-4 bg-background">
         <Card className="max-w-sm w-full">
           <CardContent className="p-8 text-center">
             <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <AlertTriangle className="text-red-500 w-8 h-8" />
             </div>
             
-            <h3 className="text-xl font-semibold text-slate-800 mb-2">
-              Produit non trouvé
+            <h3 className="text-xl font-semibold text-foreground mb-2">
+              Product not found
             </h3>
-            <p className="text-slate-600 text-sm leading-relaxed mb-6">
-              Nous n'avons pas pu identifier ce produit. Vérifiez que le code-barres est bien visible et réessayez.
+            <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+              We couldn't identify this product. Make sure the barcode is clearly visible and try again.
             </p>
             
             <div className="space-y-3">
               <Button onClick={handleNewScan} className="w-full">
                 <QrCode className="w-4 h-4 mr-2" />
-                Réessayer
+                Try Again
               </Button>
             </div>
           </CardContent>
