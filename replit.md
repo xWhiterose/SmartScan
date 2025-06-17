@@ -81,25 +81,17 @@ products table:
 
 ## Deployment Strategy
 
-**Platform**: Vercel (Production) / Replit (Development)
-**Architecture**: Next.js with API Routes (Serverless Functions)
-
+**Platform**: Replit with autoscale deployment
 **Build Process**: 
-1. Next.js builds the full-stack application
-2. API routes become serverless functions on Vercel
-3. Static pages and assets served via Vercel CDN
-4. Automatic deployments on Git push
+1. Vite builds the client-side React application
+2. ESBuild bundles the server-side Express application
+3. Static files served from `dist/public`
+4. Server runs on port 5000 (mapped to external port 80)
 
 **Environment Configuration**:
-- Development: Next.js dev server with hot reloading
-- Production: Vercel serverless deployment
+- Development: Hot reloading with Vite middleware
+- Production: Static file serving with Express
 - Database: PostgreSQL connection via DATABASE_URL environment variable
-
-**Vercel Deployment**:
-- Framework: Next.js automatically detected
-- API Routes: `/pages/api/` → Serverless functions
-- Static Generation: Optimized builds for performance
-- Edge Network: Global CDN distribution
 
 ## Changelog
 
@@ -136,13 +128,6 @@ products table:
   - Reduced header spacing to prevent title-button collision
   - Brand name changed from QuickScan to ScanSmart
   - Added nutritional data swap system for 100g vs total product quantity
-- June 17, 2025. Vercel deployment migration:
-  - Migrated from Express.js to Next.js for Vercel compatibility
-  - Created API routes in pages/api/ replacing Express endpoints
-  - Added Next.js configuration with image domain allowlist
-  - Implemented serverless architecture for production deployment
-  - Created Vercel deployment configuration and documentation
-  - Maintained all existing functionality while enabling cloud deployment
 
 ## User Preferences
 
