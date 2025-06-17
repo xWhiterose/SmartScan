@@ -33,32 +33,30 @@ export function BarcodeScanner({ onScanSuccess, onScanError, scanMode }: Barcode
   const borderThemeClass = scanMode === 'pet' ? 'border-scan-pet' : scanMode === 'cosmetic' ? 'border-scan-cosmetic' : 'border-scan-nutri';
 
   return (
-    <div className="relative flex-1 overflow-hidden">
-      {/* Video stream */}
-      <video
-        ref={videoRef}
-        className="w-full h-full object-cover"
-        autoPlay
-        playsInline
-        muted
-      />
-      
-      {/* Blur overlay with clear center */}
-      <div className="absolute inset-0">
-        {/* Top blur */}
-        <div className="absolute top-0 left-0 right-0 h-1/2 bg-black/20 backdrop-blur-md"></div>
-        {/* Bottom blur */}
-        <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-black/20 backdrop-blur-md"></div>
-        {/* Left blur */}
-        <div className="absolute top-1/2 left-0 w-1/2 h-60 -translate-y-1/2 bg-black/20 backdrop-blur-md"></div>
-        {/* Right blur */}
-        <div className="absolute top-1/2 right-0 w-1/2 h-60 -translate-y-1/2 bg-black/20 backdrop-blur-md"></div>
+    <div className="relative flex-1 overflow-hidden bg-slate-100">
+      {/* Background pattern or solid color */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 to-slate-200">
+        <div className="absolute inset-0 opacity-10">
+          <div className="w-full h-full" style={{
+            backgroundImage: `radial-gradient(circle at 25% 25%, rgba(0,0,0,0.1) 1px, transparent 1px)`,
+            backgroundSize: '20px 20px'
+          }}></div>
+        </div>
       </div>
       
       {/* Scanner overlay */}
       <div className="absolute inset-0 flex items-center justify-center">
-        {/* Scanning frame - clear area */}
-        <div className="relative w-80 h-60 border-4 border-white/50 rounded-2xl bg-transparent">
+        {/* Scanning frame with inset video */}
+        <div className="relative w-80 h-60 rounded-2xl overflow-hidden border-4 border-white/50 shadow-2xl">
+          {/* Video stream only in the scan area */}
+          <video
+            ref={videoRef}
+            className="w-full h-full object-cover"
+            autoPlay
+            playsInline
+            muted
+          />
+          
           {/* Corner indicators */}
           <div className={cn("absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 rounded-tl-lg", borderThemeClass)}></div>
           <div className={cn("absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 rounded-tr-lg", borderThemeClass)}></div>
