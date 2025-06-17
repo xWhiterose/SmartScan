@@ -129,29 +129,29 @@ function generateHealthAdvice(product: any, scanType: 'food' | 'pet' | 'cosmetic
   
   if (grade === 'A') {
     if (name.includes('yaourt') || name.includes('yogurt')) {
-      return "Excellent choix ! Ce yaourt est une excellente source de protéines et de probiotiques, parfait pour un en-cas sain ou un petit-déjeuner équilibré.";
+      return "Excellent choice! This yogurt is a great source of protein and probiotics, perfect for a healthy snack or balanced breakfast.";
     } else if (name.includes('fruit') || name.includes('légume')) {
-      return "Parfait ! Les fruits et légumes sont essentiels pour une alimentation équilibrée. Riches en vitamines et fibres.";
+      return "Perfect! Fruits and vegetables are essential for a balanced diet. Rich in vitamins and fiber.";
     }
-    return "Excellent choix nutritionnel ! Ce produit fait partie des aliments recommandés pour une alimentation saine et équilibrée.";
+    return "Excellent nutritional choice! This product is among the recommended foods for a healthy and balanced diet.";
   } else if (grade === 'B') {
-    return "Bon choix ! Ce produit présente une bonne qualité nutritionnelle. À consommer dans le cadre d'une alimentation variée.";
+    return "Good choice! This product has good nutritional quality. Consume as part of a varied diet.";
   } else if (grade === 'C') {
-    return "Qualité nutritionnelle correcte. À consommer avec modération et dans le cadre d'une alimentation équilibrée.";
+    return "Decent nutritional quality. Consume in moderation as part of a balanced diet.";
   } else if (grade === 'D') {
-    return "Attention ! Ce produit est riche en graisses, sucres ou sel. À limiter dans votre alimentation quotidienne.";
+    return "Caution! This product is high in fats, sugars or salt. Limit in your daily diet.";
   } else if (grade === 'E') {
-    return "Produit à éviter au quotidien. Très riche en graisses, sucres ou sel. À réserver pour des occasions exceptionnelles.";
+    return "Avoid daily consumption. Very high in fats, sugars or salt. Reserve for exceptional occasions.";
   }
   
   // Default advice based on nutritional content
   if (product.calories < 100) {
-    return "Produit peu calorique, bon pour maintenir un poids santé.";
+    return "Low-calorie product, good for maintaining a healthy weight.";
   } else if (product.proteins > 10) {
-    return "Riche en protéines ! Idéal pour la croissance et le maintien de la masse musculaire.";
+    return "High in protein! Ideal for growth and maintaining muscle mass.";
   } else if (product.sugars > 15) {
-    return "Attention aux sucres ! À consommer avec modération, surtout entre les repas.";
+    return "Watch the sugar content! Consume in moderation, especially between meals.";
   }
   
-  return "Pensez à varier votre alimentation et à consommer ce produit dans le cadre d'une alimentation équilibrée.";
+  return "Remember to vary your diet and consume this product as part of a balanced diet.";
 }

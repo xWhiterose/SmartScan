@@ -69,15 +69,19 @@ export function BarcodeScanner({ onScanSuccess, onScanError, scanMode }: Barcode
                 bgThemeClass
               )}
             >
-              {/* Ripple effect */}
+              {/* Enhanced ripple effect */}
               <div className={cn(
-                "absolute inset-0 rounded-full opacity-30 animate-ping",
-                bgThemeClass.replace('bg-', 'bg-opacity-30 bg-')
-              )}></div>
+                "absolute -inset-4 rounded-full opacity-20 animate-ping",
+                bgThemeClass
+              )} style={{ animationDuration: '2s' }}></div>
               <div className={cn(
-                "absolute inset-0 rounded-full opacity-20 animate-pulse",
-                bgThemeClass.replace('bg-', 'bg-opacity-20 bg-')
-              )} style={{ animationDelay: '1s' }}></div>
+                "absolute -inset-8 rounded-full opacity-10 animate-ping",
+                bgThemeClass
+              )} style={{ animationDuration: '3s', animationDelay: '0.5s' }}></div>
+              <div className={cn(
+                "absolute -inset-12 rounded-full opacity-5 animate-ping",
+                bgThemeClass
+              )} style={{ animationDuration: '4s', animationDelay: '1s' }}></div>
               
               {/* Content */}
               <div className="relative z-10 flex flex-col items-center">
