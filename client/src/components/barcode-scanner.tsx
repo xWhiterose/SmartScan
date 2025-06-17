@@ -30,9 +30,10 @@ export function BarcodeScanner({ onScanSuccess, onScanError, scanMode }: Barcode
     setShowCamera(true);
   };
 
-  const themeClass = scanMode === 'pet' ? 'scan-pet' : scanMode === 'cosmetic' ? 'scan-cosmetic' : 'scan-nutri';
-  const bgThemeClass = scanMode === 'pet' ? 'bg-scan-pet' : scanMode === 'cosmetic' ? 'bg-scan-cosmetic' : 'bg-scan-nutri';
-  const borderThemeClass = scanMode === 'pet' ? 'border-scan-pet' : scanMode === 'cosmetic' ? 'border-scan-cosmetic' : 'border-scan-nutri';
+  const themeClass = scanMode === 'pet' ? 'scan-pet' : scanMode === 'cosmetic' ? 'scan-cosmetic' : 'scan-food';
+  const bgThemeClass = scanMode === 'pet' ? 'bg-scan-pet' : scanMode === 'cosmetic' ? 'bg-scan-cosmetic' : 'bg-scan-food';
+  const borderThemeClass = scanMode === 'pet' ? 'border-scan-pet' : scanMode === 'cosmetic' ? 'border-scan-cosmetic' : 'border-scan-food';
+  const textThemeClass = scanMode === 'pet' ? 'text-scan-pet' : scanMode === 'cosmetic' ? 'text-scan-cosmetic' : 'text-scan-food';
 
   const getScanIcon = () => {
     switch (scanMode) {

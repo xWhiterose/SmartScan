@@ -60,7 +60,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const healthAdvice = generateHealthAdvice(product, scanType);
       
       res.json({
-        ...product,
+        barcode: product.barcode,
+        name: product.name,
+        brand: product.brand,
+        imageUrl: product.imageUrl,
+        nutriscoreGrade: product.nutriscoreGrade,
+        quantity: product.quantity,
+        nutritionalData: {
+          calories: product.calories || 0,
+          fat: product.fat || 0,
+          sugars: product.sugars || 0,
+          proteins: product.proteins || 0,
+        },
         healthAdvice,
         type: scanType,
       });

@@ -38,11 +38,11 @@ export default function Scanner() {
                 <Target className="w-4 h-4 text-white z-10" />
                 <div className="absolute inset-0 bg-gradient-to-br from-orange-400 to-red-400 rounded-full animate-pulse opacity-50"></div>
               </div>
-              <span className="text-lg font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">QuickScan</span>
+              <span className="text-lg font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">ScanSmart</span>
             </div>
 
             {/* Mode Toggle Buttons */}
-            <div className="flex items-center space-x-1 bg-muted rounded-xl p-1">
+            <div className="flex items-center space-x-1 bg-muted rounded-xl p-1 ml-2">
               <Button
                 variant={scanMode === 'food' ? 'default' : 'ghost'}
                 size="sm"
@@ -50,7 +50,7 @@ export default function Scanner() {
                 className={cn(
                   "flex items-center space-x-2 transition-all duration-200 text-xs px-2",
                   scanMode === 'food' 
-                    ? "bg-scan-nutri hover:bg-scan-nutri text-white shadow-md" 
+                    ? "bg-scan-food hover:bg-scan-food text-white shadow-md" 
                     : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                 )}
               >

@@ -57,6 +57,7 @@ export interface ProductData {
   brand?: string;
   imageUrl?: string;
   nutriscoreGrade?: string;
+  quantity?: string;
   nutritionalData: NutritionalData;
   healthAdvice: string;
   type?: 'food' | 'pet' | 'cosmetic';

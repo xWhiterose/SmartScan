@@ -31,10 +31,10 @@
   --nutri-d: hsl(22, 73%, 57%);
   --nutri-e: hsl(4, 76%, 58%);
   
-  /* Scan mode colors */
-  --scan-nutri: hsl(158, 64%, 52%);
-  --scan-pet: hsl(22, 88%, 55%);
-  --scan-cosmetic: hsl(330, 81%, 60%);
+  /* Scan mode colors - matching logo colors */
+  --scan-food: hsl(22, 88%, 55%); /* orange */
+  --scan-pet: hsl(0, 76%, 58%); /* red */
+  --scan-cosmetic: hsl(330, 81%, 60%); /* pink */
 }
 
 .dark {
