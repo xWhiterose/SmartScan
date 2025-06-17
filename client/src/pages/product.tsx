@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useLocation } from 'wouter';
-import { ArrowLeft, Share2, QrCode, PieChart, ThumbsUp, AlertTriangle, Leaf, Heart } from 'lucide-react';
+import { ArrowLeft, Share2, QrCode, PieChart, ThumbsUp, AlertTriangle, Leaf, Heart, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { NutriScore } from '@/components/nutri-score';
