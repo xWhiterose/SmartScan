@@ -1,0 +1,14 @@
+[nix]
+channel = "stable-24_05"
+
+[deployment]
+run = ["sh", "-c", "cd client && npm run build"]
+deploymentTarget = "static"
+publicDir = "client/dist"
+
+[[ports]]
+localPort = 5173
+externalPort = 80
+
+[env]
+NODE_ENV = "development"
