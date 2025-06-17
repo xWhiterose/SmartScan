@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from 'react';
-import { BrowserMultiFormatReader, NotFoundException } from '@zxing/library';
+import { BrowserMultiFormatReader } from '@zxing/library';
 
 export interface UseBarcodeScanner {
   isScanning: boolean;

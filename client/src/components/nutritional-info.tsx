@@ -6,10 +6,10 @@ interface NutritionalInfoProps {
   quantity?: string;
 }
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { RotateCcw, ArrowLeftRight, Edit3, Check } from 'lucide-react';
+import { ArrowLeftRight, Edit3, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface NutrientCardProps {
@@ -84,10 +84,7 @@ export function NutritionalInfo({ calories = 0, fat = 0, sugars = 0, proteins = 
     return (per100gValue * effectiveWeight) / 100;
   };
   
-  const displayCalories = showPerPackage ? getPackageValue(calories) : calories;
-  const displayFat = showPerPackage ? getPackageValue(fat) : fat;
-  const displaySugars = showPerPackage ? getPackageValue(sugars) : sugars;
-  const displayProteins = showPerPackage ? getPackageValue(proteins) : proteins;
+
 
   // Handle touch events for swipe
   const handleTouchStart = (e: React.TouchEvent) => {

@@ -1,0 +1,54 @@
+[02:07:56.331] Running build in Washington, D.C., USA (East) – iad1
+[02:07:56.332] Build machine configuration: 2 cores, 8 GB
+[02:07:56.345] Cloning github.com/xWhiterose/smartScan (Branch: main, Commit: 0cd0171)
+[02:07:56.577] Previous build caches not available
+[02:07:56.617] Cloning completed: 272.000ms
+[02:07:56.900] Running "vercel build"
+[02:07:57.338] Vercel CLI 42.2.0
+[02:07:57.956] Running "install" command: `npm install`...
+[02:08:02.488] npm warn deprecated @esbuild-kit/esm-loader@2.6.5: Merged into tsx: https://tsx.is
+[02:08:02.524] npm warn deprecated @esbuild-kit/core-utils@3.3.2: Merged into tsx: https://tsx.is
+[02:08:08.342] 
+[02:08:08.343] added 485 packages, and audited 486 packages in 10s
+[02:08:08.344] 
+[02:08:08.344] 64 packages are looking for funding
+[02:08:08.344]   run `npm fund` for details
+[02:08:08.380] 
+[02:08:08.381] 7 vulnerabilities (1 low, 6 moderate)
+[02:08:08.381] 
+[02:08:08.381] To address issues that do not require attention, run:
+[02:08:08.382]   npm audit fix
+[02:08:08.382] 
+[02:08:08.382] To address all issues (including breaking changes), run:
+[02:08:08.382]   npm audit fix --force
+[02:08:08.382] 
+[02:08:08.386] Run `npm audit` for details.
+[02:08:33.322] 
+[02:08:33.322] added 310 packages, and audited 311 packages in 25s
+[02:08:33.323] 
+[02:08:33.323] 45 packages are looking for funding
+[02:08:33.323]   run `npm fund` for details
+[02:08:33.330] 
+[02:08:33.333] 2 moderate severity vulnerabilities
+[02:08:33.333] 
+[02:08:33.333] To address all issues (including breaking changes), run:
+[02:08:33.333]   npm audit fix --force
+[02:08:33.334] 
+[02:08:33.334] Run `npm audit` for details.
+[02:08:33.465] 
+[02:08:33.465] > scansmart-client@0.0.0 build
+[02:08:33.465] > tsc && vite build
+[02:08:33.466] 
+[02:08:40.527] src/components/barcode-scanner.tsx(33,9): error TS6133: 'themeClass' is declared but its value is never read.
+[02:08:40.528] src/components/nutritional-info.tsx(9,28): error TS6133: 'useEffect' is declared but its value is never read.
+[02:08:40.529] src/components/nutritional-info.tsx(12,10): error TS6133: 'RotateCcw' is declared but its value is never read.
+[02:08:40.529] src/components/nutritional-info.tsx(87,9): error TS6133: 'displayCalories' is declared but its value is never read.
+[02:08:40.529] src/components/nutritional-info.tsx(88,9): error TS6133: 'displayFat' is declared but its value is never read.
+[02:08:40.529] src/components/nutritional-info.tsx(89,9): error TS6133: 'displaySugars' is declared but its value is never read.
+[02:08:40.529] src/components/nutritional-info.tsx(90,9): error TS6133: 'displayProteins' is declared but its value is never read.
+[02:08:40.529] src/hooks/use-barcode-scanner.ts(2,36): error TS6133: 'NotFoundException' is declared but its value is never read.
+[02:08:40.530] src/lib/open-food-facts-client.ts(61,39): error TS6133: 'product' is declared but its value is never read.
+[02:08:40.530] src/lib/open-food-facts-client.ts(72,34): error TS6133: 'product' is declared but its value is never read.
+[02:08:40.557] Error: Command "cd client && npm install && npm run build" exited with 2
+[02:08:40.871] 
+[02:08:43.814] Exiting build container

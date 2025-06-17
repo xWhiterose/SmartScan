@@ -37,11 +37,11 @@ interface ProductData {
 
 function generateHealthAdvice(product: any, scanType: 'food' | 'pet' | 'cosmetic' = 'food'): string {
   if (scanType === 'cosmetic') {
-    return generateCosmeticHealthAdvice(product);
+    return generateCosmeticHealthAdvice();
   }
   
   if (scanType === 'pet') {
-    return generatePetHealthAdvice(product);
+    return generatePetHealthAdvice();
   }
 
   const { calories, fat, sugars } = product.nutritionalData || {};
@@ -58,7 +58,7 @@ function generateHealthAdvice(product: any, scanType: 'food' | 'pet' | 'cosmetic
   }
 }
 
-function generateCosmeticHealthAdvice(product: any): string {
+function generateCosmeticHealthAdvice(): string {
   const advice = [
     "Check ingredients for potential allergens before use.",
     "Perform a patch test if you have sensitive skin.",
@@ -69,7 +69,7 @@ function generateCosmeticHealthAdvice(product: any): string {
   return advice[Math.floor(Math.random() * advice.length)];
 }
 
-function generatePetHealthAdvice(product: any): string {
+function generatePetHealthAdvice(): string {
   const advice = [
     "Ensure this food is appropriate for your pet's age and size.",
     "Check ingredients for any known allergies your pet may have.",
