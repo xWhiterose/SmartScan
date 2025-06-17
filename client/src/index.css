@@ -30,6 +30,10 @@
   --nutri-c: hsl(39, 100%, 55%);
   --nutri-d: hsl(22, 73%, 57%);
   --nutri-e: hsl(4, 76%, 58%);
+  
+  /* Scan mode colors */
+  --scan-nutri: hsl(158, 64%, 52%);
+  --scan-pet: hsl(22, 88%, 55%);
 }
 
 .dark {
@@ -79,6 +83,27 @@
   }
   .nutri-e {
     background-color: var(--nutri-e);
+  }
+  
+  .scan-nutri {
+    color: var(--scan-nutri);
+  }
+  .scan-pet {
+    color: var(--scan-pet);
+  }
+  
+  .bg-scan-nutri {
+    background-color: var(--scan-nutri);
+  }
+  .bg-scan-pet {
+    background-color: var(--scan-pet);
+  }
+  
+  .border-scan-nutri {
+    border-color: var(--scan-nutri);
+  }
+  .border-scan-pet {
+    border-color: var(--scan-pet);
   }
 }
 

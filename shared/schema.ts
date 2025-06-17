@@ -57,4 +57,5 @@ export interface ProductData {
   nutriscoreGrade?: string;
   nutritionalData: NutritionalData;
   healthAdvice: string;
+  type?: 'food' | 'pet';
 }

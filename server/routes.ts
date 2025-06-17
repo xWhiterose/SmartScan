@@ -7,6 +7,7 @@ import { z } from "zod";
 export async function registerRoutes(app: Express): Promise<Server> {
   // Get product by barcode
   app.get("/api/product/:barcode", async (req, res) => {
+    const scanType = req.query.type as 'food' | 'pet' || 'food';
     try {
       const barcode = req.params.barcode;
       
@@ -14,8 +15,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let product = await storage.getProduct(barcode);
       
       if (!product) {
-        // Fetch from Open Food Facts API
-        const response = await fetch(`https://world.openfoodfacts.org/api/v0/product/${barcode}.json`);
+        // Fetch from Open Food Facts API based on scan type
+        const apiUrl = scanType === 'pet' 
+          ? `https://world.openpetfoodfacts.org/api/v0/product/${barcode}.json`
+          : `https://world.openfoodfacts.org/api/v0/product/${barcode}.json`;
+        
+        const response = await fetch(apiUrl);
         const data: OpenFoodFactsProduct = await response.json();
         
         if (data.status === 0 || !data.product) {
@@ -45,12 +50,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         product = newProduct;
       }
       
-      // Generate health advice based on Nutri-Score
-      const healthAdvice = generateHealthAdvice(product);
+      // Generate health advice based on Nutri-Score and scan type
+      const healthAdvice = generateHealthAdvice(product, scanType);
       
       res.json({
         ...product,
         healthAdvice,
+        type: scanType,
       });
     } catch (error) {
       console.error("Error fetching product:", error);
@@ -62,9 +68,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
   return httpServer;
 }
 
-function generateHealthAdvice(product: any): string {
+function generatePetHealthAdvice(product: any): string {
   const grade = product.nutriscoreGrade;
   const name = product.name.toLowerCase();
+  
+  if (grade === 'A') {
+    return "Excellent choix pour votre animal ! Ce produit présente une composition nutritionnelle optimale.";
+  } else if (grade === 'B') {
+    return "Bon choix ! Ce produit convient bien à l'alimentation de votre animal de compagnie.";
+  } else if (grade === 'C') {
+    return "Qualité correcte. Peut faire partie d'une alimentation équilibrée pour votre animal.";
+  } else if (grade === 'D') {
+    return "Attention ! Ce produit présente des déséquilibres nutritionnels. À limiter dans l'alimentation de votre animal.";
+  } else if (grade === 'E') {
+    return "Produit de faible qualité nutritionnelle. Non recommandé pour l'alimentation régulière de votre animal.";
+  }
+  
+  // Default advice based on nutritional content for pets
+  if (product.proteins > 25) {
+    return "Riche en protéines ! Idéal pour le développement musculaire de votre animal.";
+  } else if (product.fat > 15) {
+    return "Attention au taux de matières grasses. Vérifiez que cela convient au niveau d'activité de votre animal.";
+  }
+  
+  return "Vérifiez que ce produit correspond aux besoins spécifiques de votre animal de compagnie.";
+}
+
+function generateHealthAdvice(product: any, scanType: 'food' | 'pet' = 'food'): string {
+  const grade = product.nutriscoreGrade;
+  const name = product.name.toLowerCase();
+  
+  if (scanType === 'pet') {
+    return generatePetHealthAdvice(product);
+  }
   
   if (grade === 'A') {
     if (name.includes('yaourt') || name.includes('yogurt')) {
