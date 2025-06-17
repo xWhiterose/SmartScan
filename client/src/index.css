@@ -34,6 +34,7 @@
   /* Scan mode colors */
   --scan-nutri: hsl(158, 64%, 52%);
   --scan-pet: hsl(22, 88%, 55%);
+  --scan-cosmetic: hsl(330, 81%, 60%);
 }
 
 .dark {
@@ -98,12 +99,22 @@
   .bg-scan-pet {
     background-color: var(--scan-pet);
   }
+  .bg-scan-cosmetic {
+    background-color: var(--scan-cosmetic);
+  }
   
   .border-scan-nutri {
     border-color: var(--scan-nutri);
   }
   .border-scan-pet {
     border-color: var(--scan-pet);
+  }
+  .border-scan-cosmetic {
+    border-color: var(--scan-cosmetic);
+  }
+  
+  .scan-cosmetic {
+    color: var(--scan-cosmetic);
   }
 }
 

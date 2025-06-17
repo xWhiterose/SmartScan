@@ -7,7 +7,7 @@ import { z } from "zod";
 export async function registerRoutes(app: Express): Promise<Server> {
   // Get product by barcode
   app.get("/api/product/:barcode", async (req, res) => {
-    const scanType = req.query.type as 'food' | 'pet' || 'food';
+    const scanType = req.query.type as 'food' | 'pet' | 'cosmetic' || 'food';
     try {
       const barcode = req.params.barcode;
       
@@ -15,10 +15,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let product = await storage.getProduct(barcode);
       
       if (!product) {
-        // Fetch from Open Food Facts API based on scan type
-        const apiUrl = scanType === 'pet' 
-          ? `https://world.openpetfoodfacts.org/api/v0/product/${barcode}.json`
-          : `https://world.openfoodfacts.org/api/v0/product/${barcode}.json`;
+        // Fetch from appropriate API based on scan type
+        let apiUrl: string;
+        if (scanType === 'pet') {
+          apiUrl = `https://world.openpetfoodfacts.org/api/v0/product/${barcode}.json`;
+        } else if (scanType === 'cosmetic') {
+          apiUrl = `https://world.openbeautyfacts.org/api/v0/product/${barcode}.json`;
+        } else {
+          apiUrl = `https://world.openfoodfacts.org/api/v0/product/${barcode}.json`;
+        }
         
         const response = await fetch(apiUrl);
         const data: OpenFoodFactsProduct = await response.json();
@@ -68,6 +73,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
   return httpServer;
 }
 
+function generateCosmeticHealthAdvice(product: any): string {
+  const name = product.name.toLowerCase();
+  
+  if (name.includes('bio') || name.includes('organic') || name.includes('naturel')) {
+    return "Excellent choix ! Ce produit contient des ingrédients naturels et biologiques, idéal pour une routine beauté respectueuse de votre peau.";
+  } else if (name.includes('sensitive') || name.includes('sensible') || name.includes('hypoallergenic')) {
+    return "Parfait pour les peaux sensibles ! Ce produit est formulé pour minimiser les risques d'irritation.";
+  } else if (name.includes('spf') || name.includes('sun') || name.includes('solaire')) {
+    return "Protection solaire essentielle ! N'oubliez pas d'appliquer généreusement et de renouveler régulièrement.";
+  } else if (name.includes('anti-age') || name.includes('anti-aging') || name.includes('rides')) {
+    return "Soin anti-âge efficace ! Utilisez régulièrement pour des résultats optimaux sur les signes de l'âge.";
+  } else if (name.includes('hydrat') || name.includes('moistur')) {
+    return "Hydratation optimale ! Ce produit aide à maintenir l'équilibre hydrique de votre peau.";
+  }
+  
+  return "Vérifiez la liste des ingrédients pour vous assurer qu'ils conviennent à votre type de peau et à vos besoins.";
+}
+
 function generatePetHealthAdvice(product: any): string {
   const grade = product.nutriscoreGrade;
   const name = product.name.toLowerCase();
@@ -94,12 +117,14 @@ function generatePetHealthAdvice(product: any): string {
   return "Vérifiez que ce produit correspond aux besoins spécifiques de votre animal de compagnie.";
 }
 
-function generateHealthAdvice(product: any, scanType: 'food' | 'pet' = 'food'): string {
+function generateHealthAdvice(product: any, scanType: 'food' | 'pet' | 'cosmetic' = 'food'): string {
   const grade = product.nutriscoreGrade;
   const name = product.name.toLowerCase();
   
   if (scanType === 'pet') {
     return generatePetHealthAdvice(product);
+  } else if (scanType === 'cosmetic') {
+    return generateCosmeticHealthAdvice(product);
   }
   
   if (grade === 'A') {
