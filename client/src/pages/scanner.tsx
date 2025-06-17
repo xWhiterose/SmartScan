@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { BarcodeScanner } from '@/components/barcode-scanner';
 import { LoadingOverlay } from '@/components/loading-overlay';
 import { useLocation } from 'wouter';
-import { Utensils, PawPrint, Sparkles, Zap } from 'lucide-react';
+import { Utensils, PawPrint, Sparkles, Target } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -34,8 +34,9 @@ export default function Scanner() {
           <div className="flex items-center justify-between">
             {/* Brand Logo */}
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-orange-500 via-red-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg">
-                <Zap className="w-5 h-5 text-white" />
+              <div className="w-8 h-8 bg-gradient-to-br from-orange-500 via-red-500 to-pink-500 rounded-full flex items-center justify-center shadow-lg relative">
+                <Target className="w-4 h-4 text-white z-10" />
+                <div className="absolute inset-0 bg-gradient-to-br from-orange-400 to-red-400 rounded-full animate-pulse opacity-50"></div>
               </div>
               <span className="text-lg font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">QuickScan</span>
             </div>

@@ -58,89 +58,94 @@ export function BarcodeScanner({ onScanSuccess, onScanError, scanMode }: Barcode
       </div>
       
       {/* Scanner overlay */}
-      <div className="absolute inset-0 flex items-center justify-center">
+      <div className="absolute inset-0 flex items-center justify-center pt-16">
         {!showCamera ? (
           /* Central start button with ripple effect */
-          <div className="relative">
+          <div className="relative flex flex-col items-center">
+            {/* Ripple effect layers */}
+            <div className={cn(
+              "absolute w-32 h-32 rounded-full opacity-20 animate-ping",
+              bgThemeClass
+            )} style={{ animationDuration: '2s' }}></div>
+            <div className={cn(
+              "absolute w-40 h-40 rounded-full opacity-15 animate-ping",
+              bgThemeClass
+            )} style={{ animationDuration: '3s', animationDelay: '0.5s' }}></div>
+            <div className={cn(
+              "absolute w-48 h-48 rounded-full opacity-10 animate-ping",
+              bgThemeClass
+            )} style={{ animationDuration: '4s', animationDelay: '1s' }}></div>
+            
             <Button
               onClick={handleStartScan}
               className={cn(
-                "w-32 h-32 rounded-full flex flex-col items-center justify-center text-white font-semibold text-lg shadow-2xl hover:scale-105 transition-all duration-300 relative overflow-hidden group",
+                "w-32 h-32 rounded-full flex items-center justify-center text-white shadow-2xl hover:scale-110 transition-all duration-300 relative z-10 p-0",
                 bgThemeClass
               )}
             >
-              {/* Enhanced ripple effect */}
-              <div className={cn(
-                "absolute -inset-4 rounded-full opacity-20 animate-ping",
-                bgThemeClass
-              )} style={{ animationDuration: '2s' }}></div>
-              <div className={cn(
-                "absolute -inset-8 rounded-full opacity-10 animate-ping",
-                bgThemeClass
-              )} style={{ animationDuration: '3s', animationDelay: '0.5s' }}></div>
-              <div className={cn(
-                "absolute -inset-12 rounded-full opacity-5 animate-ping",
-                bgThemeClass
-              )} style={{ animationDuration: '4s', animationDelay: '1s' }}></div>
-              
-              {/* Content */}
-              <div className="relative z-10 flex flex-col items-center">
-                <div className="w-12 h-12 mb-1 flex items-center justify-center">
-                  {getScanIcon()}
-                </div>
-                <span>Scan</span>
+              <div className="w-16 h-16 flex items-center justify-center">
+                {getScanIcon()}
               </div>
             </Button>
+            
+            {/* "Scan me" text below button */}
+            <span className={cn(
+              "mt-4 text-lg font-semibold",
+              scanMode === 'pet' ? 'text-scan-pet' : scanMode === 'cosmetic' ? 'text-scan-cosmetic' : 'text-scan-nutri'
+            )}>
+              Scan me
+            </span>
           </div>
         ) : (
           /* Scanning frame with inset video */
-          <div className="relative w-80 h-60 rounded-2xl overflow-hidden border-4 border-white/50 shadow-2xl">
-            {/* Video stream only in the scan area */}
-            <video
-              ref={videoRef}
-              className="w-full h-full object-cover"
-              autoPlay
-              playsInline
-              muted
-            />
+          <div className="relative flex flex-col items-center">
+            <div className="relative w-80 h-60 rounded-2xl overflow-hidden border-4 border-white/50 shadow-2xl">
+              {/* Video stream only in the scan area */}
+              <video
+                ref={videoRef}
+                className="w-full h-full object-cover"
+                autoPlay
+                playsInline
+                muted
+              />
+              
+              {/* Corner indicators */}
+              <div className={cn("absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 rounded-tl-lg", borderThemeClass)}></div>
+              <div className={cn("absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 rounded-tr-lg", borderThemeClass)}></div>
+              <div className={cn("absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 rounded-bl-lg", borderThemeClass)}></div>
+              <div className={cn("absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 rounded-br-lg", borderThemeClass)}></div>
+              
+              {/* Scanning line animation */}
+              <div className={cn("absolute top-0 left-0 w-full border-t-2 animate-scan-line", borderThemeClass)}></div>
+            </div>
             
-            {/* Corner indicators */}
-            <div className={cn("absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 rounded-tl-lg", borderThemeClass)}></div>
-            <div className={cn("absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 rounded-tr-lg", borderThemeClass)}></div>
-            <div className={cn("absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 rounded-bl-lg", borderThemeClass)}></div>
-            <div className={cn("absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 rounded-br-lg", borderThemeClass)}></div>
-            
-            {/* Scanning line animation */}
-            <div className={cn("absolute top-0 left-0 w-full border-t-2 animate-scan-line", borderThemeClass)}></div>
+            {/* Instructions below camera module */}
+            <div className="mt-6 text-center">
+              <p className={cn(
+                "text-lg font-medium mb-2",
+                scanMode === 'pet' ? 'text-scan-pet' : scanMode === 'cosmetic' ? 'text-scan-cosmetic' : 'text-scan-nutri'
+              )}>
+                Point camera at barcode
+              </p>
+              <p className={cn(
+                "text-sm opacity-80",
+                scanMode === 'pet' ? 'text-scan-pet' : scanMode === 'cosmetic' ? 'text-scan-cosmetic' : 'text-scan-nutri'
+              )}>
+                Scanning {scanMode === 'pet' ? 'pet' : scanMode === 'cosmetic' ? 'beauty' : 'food'} products
+              </p>
+            </div>
           </div>
         )}
       </div>
 
-      {/* Instructions et status - seulement quand la caméra est active */}
+      {/* Status indicator - seulement quand la caméra est active */}
       {showCamera && (
-        <>
-          {/* Instructions repositionnées plus haut pour mobile */}
-          <div className="absolute bottom-20 left-0 right-0 px-6">
-            <div className="bg-black/60 backdrop-blur-md rounded-2xl p-4 text-center">
-              <p className="text-white text-lg font-medium mb-2">
-                Point camera at barcode
-              </p>
-              <p className="text-white/80 text-sm">
-                {scanMode === 'pet' ? 'Scanning pet products' : 
-                 scanMode === 'cosmetic' ? 'Scanning beauty products' : 
-                 'Scanning food products'}
-              </p>
-            </div>
+        <div className="absolute top-6 left-0 right-0 flex justify-center">
+          <div className={cn("text-white px-4 py-2 rounded-full text-sm font-medium flex items-center space-x-2", bgThemeClass)}>
+            <div className="w-2 h-2 bg-current rounded-full animate-pulse"></div>
+            <span>{isScanning ? 'Searching...' : 'Initializing...'}</span>
           </div>
-
-          {/* Status indicator */}
-          <div className="absolute top-6 left-0 right-0 flex justify-center">
-            <div className={cn("text-white px-4 py-2 rounded-full text-sm font-medium flex items-center space-x-2", bgThemeClass)}>
-              <div className="w-2 h-2 bg-current rounded-full animate-pulse"></div>
-              <span>{isScanning ? 'Searching...' : 'Initializing...'}</span>
-            </div>
-          </div>
-        </>
+        </div>
       )}
 
       {/* Error display */}
