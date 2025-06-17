@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 interface BarcodeScannerProps {
   onScanSuccess: (barcode: string) => void;
   onScanError?: (error: string) => void;
-  scanMode: 'food' | 'pet';
+  scanMode: 'food' | 'pet' | 'cosmetic';
 }
 
 export function BarcodeScanner({ onScanSuccess, onScanError, scanMode }: BarcodeScannerProps) {
@@ -28,9 +28,9 @@ export function BarcodeScanner({ onScanSuccess, onScanError, scanMode }: Barcode
     }
   }, [videoRef.current]);
 
-  const themeClass = scanMode === 'pet' ? 'scan-pet' : 'scan-nutri';
-  const bgThemeClass = scanMode === 'pet' ? 'bg-scan-pet' : 'bg-scan-nutri';
-  const borderThemeClass = scanMode === 'pet' ? 'border-scan-pet' : 'border-scan-nutri';
+  const themeClass = scanMode === 'pet' ? 'scan-pet' : scanMode === 'cosmetic' ? 'scan-cosmetic' : 'scan-nutri';
+  const bgThemeClass = scanMode === 'pet' ? 'bg-scan-pet' : scanMode === 'cosmetic' ? 'bg-scan-cosmetic' : 'bg-scan-nutri';
+  const borderThemeClass = scanMode === 'pet' ? 'border-scan-pet' : scanMode === 'cosmetic' ? 'border-scan-cosmetic' : 'border-scan-nutri';
 
   return (
     <div className="relative flex-1 overflow-hidden">
@@ -43,10 +43,22 @@ export function BarcodeScanner({ onScanSuccess, onScanError, scanMode }: Barcode
         muted
       />
       
+      {/* Blur overlay with clear center */}
+      <div className="absolute inset-0">
+        {/* Top blur */}
+        <div className="absolute top-0 left-0 right-0 h-1/2 bg-black/20 backdrop-blur-md"></div>
+        {/* Bottom blur */}
+        <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-black/20 backdrop-blur-md"></div>
+        {/* Left blur */}
+        <div className="absolute top-1/2 left-0 w-1/2 h-60 -translate-y-1/2 bg-black/20 backdrop-blur-md"></div>
+        {/* Right blur */}
+        <div className="absolute top-1/2 right-0 w-1/2 h-60 -translate-y-1/2 bg-black/20 backdrop-blur-md"></div>
+      </div>
+      
       {/* Scanner overlay */}
       <div className="absolute inset-0 flex items-center justify-center">
-        {/* Scanning frame */}
-        <div className="relative w-80 h-60 border-4 border-white/50 rounded-2xl">
+        {/* Scanning frame - clear area */}
+        <div className="relative w-80 h-60 border-4 border-white/50 rounded-2xl bg-transparent">
           {/* Corner indicators */}
           <div className={cn("absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 rounded-tl-lg", borderThemeClass)}></div>
           <div className={cn("absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 rounded-tr-lg", borderThemeClass)}></div>
@@ -65,7 +77,9 @@ export function BarcodeScanner({ onScanSuccess, onScanError, scanMode }: Barcode
             Pointez la caméra vers le code-barres
           </p>
           <p className="text-white/80 text-sm">
-            {scanMode === 'pet' ? 'Scan des produits pour animaux' : 'Scan des produits alimentaires'}
+            {scanMode === 'pet' ? 'Scan des produits pour animaux' : 
+             scanMode === 'cosmetic' ? 'Scan des produits cosmétiques' : 
+             'Scan des produits alimentaires'}
           </p>
         </div>
       </div>

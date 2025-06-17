@@ -1,6 +1,6 @@
 import { ProductData, NutritionalData } from '@shared/schema';
 
-export async function fetchProductByBarcode(barcode: string, type: 'food' | 'pet' = 'food'): Promise<ProductData> {
+export async function fetchProductByBarcode(barcode: string, type: 'food' | 'pet' | 'cosmetic' = 'food'): Promise<ProductData> {
   const response = await fetch(`/api/product/${barcode}?type=${type}`);
   
   if (!response.ok) {

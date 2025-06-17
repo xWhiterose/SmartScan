@@ -21,7 +21,7 @@ export default function Product({ params }: ProductPageProps) {
   
   // Get scan type from URL query parameters
   const urlParams = new URLSearchParams(window.location.search);
-  const scanType = (urlParams.get('type') as 'food' | 'pet') || 'food';
+  const scanType = (urlParams.get('type') as 'food' | 'pet' | 'cosmetic') || 'food';
 
   const { data: product, isLoading, error } = useQuery({
     queryKey: ['/api/product', barcode, scanType],
@@ -47,8 +47,8 @@ export default function Product({ params }: ProductPageProps) {
     }
   };
 
-  const themeColor = scanType === 'pet' ? 'bg-scan-pet' : 'bg-scan-nutri';
-  const themeIcon = scanType === 'pet' ? Heart : Leaf;
+  const themeColor = scanType === 'pet' ? 'bg-scan-pet' : scanType === 'cosmetic' ? 'bg-scan-cosmetic' : 'bg-scan-nutri';
+  const themeIcon = scanType === 'pet' ? Heart : scanType === 'cosmetic' ? Sparkles : Leaf;
   const ThemeIcon = themeIcon;
 
   if (error) {
@@ -135,6 +135,8 @@ export default function Product({ params }: ProductPageProps) {
                 "border rounded-xl p-4",
                 scanType === 'pet' 
                   ? "bg-orange-50 border-orange-200" 
+                  : scanType === 'cosmetic'
+                  ? "bg-pink-50 border-pink-200"
                   : "bg-emerald-50 border-emerald-200"
               )}>
                 <div className="flex items-start space-x-3">
@@ -144,9 +146,12 @@ export default function Product({ params }: ProductPageProps) {
                   <div>
                     <h4 className={cn(
                       "font-medium mb-1",
-                      scanType === 'pet' ? "text-orange-800" : "text-emerald-800"
+                      scanType === 'pet' ? "text-orange-800" : 
+                      scanType === 'cosmetic' ? "text-pink-800" : 
+                      "text-emerald-800"
                     )}>
-                      {product.nutriscoreGrade === 'A' || product.nutriscoreGrade === 'B' 
+                      {scanType === 'cosmetic' ? 'Produit beauté analysé' :
+                       product.nutriscoreGrade === 'A' || product.nutriscoreGrade === 'B' 
                         ? 'Excellent choix !' 
                         : product.nutriscoreGrade === 'C' 
                         ? 'Choix correct' 
@@ -154,7 +159,9 @@ export default function Product({ params }: ProductPageProps) {
                     </h4>
                     <p className={cn(
                       "text-sm leading-relaxed",
-                      scanType === 'pet' ? "text-orange-700" : "text-emerald-700"
+                      scanType === 'pet' ? "text-orange-700" : 
+                      scanType === 'cosmetic' ? "text-pink-700" : 
+                      "text-emerald-700"
                     )}>
                       {product.healthAdvice}
                     </p>

@@ -2,14 +2,14 @@ import { useState } from 'react';
 import { BarcodeScanner } from '@/components/barcode-scanner';
 import { LoadingOverlay } from '@/components/loading-overlay';
 import { useLocation } from 'wouter';
-import { Leaf, Heart } from 'lucide-react';
+import { Leaf, Heart, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 export default function Scanner() {
   const [, setLocation] = useLocation();
   const [isLoading, setIsLoading] = useState(false);
-  const [scanMode, setScanMode] = useState<'food' | 'pet'>('food');
+  const [scanMode, setScanMode] = useState<'food' | 'pet' | 'cosmetic'>('food');
 
   const handleScanSuccess = async (barcode: string) => {
     setIsLoading(true);
@@ -39,13 +39,13 @@ export default function Scanner() {
                 size="sm"
                 onClick={() => setScanMode('food')}
                 className={cn(
-                  "flex items-center space-x-2 transition-all duration-200",
+                  "flex items-center space-x-2 transition-all duration-200 text-xs px-2",
                   scanMode === 'food' 
                     ? "bg-scan-nutri hover:bg-scan-nutri text-white shadow-md" 
                     : "text-slate-600 hover:text-slate-800 hover:bg-slate-200"
                 )}
               >
-                <Leaf className="w-4 h-4" />
+                <Leaf className="w-3 h-3" />
                 <span className="font-medium">NutriScan</span>
               </Button>
               
@@ -54,14 +54,29 @@ export default function Scanner() {
                 size="sm"
                 onClick={() => setScanMode('pet')}
                 className={cn(
-                  "flex items-center space-x-2 transition-all duration-200",
+                  "flex items-center space-x-2 transition-all duration-200 text-xs px-2",
                   scanMode === 'pet' 
                     ? "bg-scan-pet hover:bg-scan-pet text-white shadow-md" 
                     : "text-slate-600 hover:text-slate-800 hover:bg-slate-200"
                 )}
               >
-                <Heart className="w-4 h-4" />
+                <Heart className="w-3 h-3" />
                 <span className="font-medium">PetScan</span>
+              </Button>
+              
+              <Button
+                variant={scanMode === 'cosmetic' ? 'default' : 'ghost'}
+                size="sm"
+                onClick={() => setScanMode('cosmetic')}
+                className={cn(
+                  "flex items-center space-x-2 transition-all duration-200 text-xs px-2",
+                  scanMode === 'cosmetic' 
+                    ? "bg-scan-cosmetic hover:bg-scan-cosmetic text-white shadow-md" 
+                    : "text-slate-600 hover:text-slate-800 hover:bg-slate-200"
+                )}
+              >
+                <Sparkles className="w-3 h-3" />
+                <span className="font-medium">CosmeticScan</span>
               </Button>
             </div>
             
@@ -69,16 +84,18 @@ export default function Scanner() {
             <div className="flex items-center space-x-2">
               <div className={cn(
                 "w-8 h-8 rounded-lg flex items-center justify-center transition-colors duration-200",
-                scanMode === 'pet' ? "bg-scan-pet" : "bg-scan-nutri"
+                scanMode === 'pet' ? "bg-scan-pet" : scanMode === 'cosmetic' ? "bg-scan-cosmetic" : "bg-scan-nutri"
               )}>
                 {scanMode === 'pet' ? (
                   <Heart className="text-white w-4 h-4" />
+                ) : scanMode === 'cosmetic' ? (
+                  <Sparkles className="text-white w-4 h-4" />
                 ) : (
                   <Leaf className="text-white w-4 h-4" />
                 )}
               </div>
               <h1 className="text-xl font-semibold text-slate-800">
-                {scanMode === 'pet' ? 'PetScan' : 'NutriScan'}
+                {scanMode === 'pet' ? 'PetScan' : scanMode === 'cosmetic' ? 'CosmeticScan' : 'NutriScan'}
               </h1>
             </div>
           </div>
