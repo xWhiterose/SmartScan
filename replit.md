@@ -128,6 +128,16 @@ products table:
   - Reduced header spacing to prevent title-button collision
   - Brand name changed from QuickScan to ScanSmart
   - Added nutritional data swap system for 100g vs total product quantity
+- June 17, 2025. Vercel deployment conversion:
+  - Converted from Express server to pure Vite client-side application
+  - Integrated Open Food Facts APIs directly in browser (no backend needed)
+  - Created intelligent nutritional swap system with custom weight input
+  - Added tabs interface: "Per 100g" always visible, "Custom" for unknown quantities
+  - Users can input product weight for automatic nutritional calculations
+  - Smooth swipe animations between nutrition views with visual indicators
+  - All text converted from French to English throughout application
+  - Fixed mobile responsiveness with no horizontal/vertical scrolling
+  - Ready for Vercel deployment with vercel.json configuration
 
 ## User Preferences
 
