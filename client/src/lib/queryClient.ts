@@ -1,4 +1,5 @@
 import { QueryClient, QueryFunction } from "@tanstack/react-query";
+import { fetchProductByBarcode } from './open-food-facts-client';
 
 async function throwIfResNotOk(res: Response) {
   if (!res.ok) {
@@ -29,7 +30,20 @@ export const getQueryFn: <T>(options: {
 }) => QueryFunction<T> =
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey }) => {
-    const res = await fetch(queryKey[0] as string, {
+    const url = queryKey[0] as string;
+    
+    // Handle product API requests directly with Open Food Facts
+    if (url.includes('/api/product/')) {
+      const barcode = url.split('/').pop()?.split('?')[0];
+      const urlParams = new URLSearchParams(url.split('?')[1] || '');
+      const scanType = urlParams.get('type') as 'food' | 'pet' | 'cosmetic' || 'food';
+      
+      if (barcode) {
+        return await fetchProductByBarcode(barcode, scanType);
+      }
+    }
+    
+    const res = await fetch(url, {
       credentials: "include",
     });
 
