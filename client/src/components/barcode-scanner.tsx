@@ -15,16 +15,17 @@ export function BarcodeScanner({ onScanSuccess, onScanError }: BarcodeScannerPro
   );
 
   useEffect(() => {
-    startScanning();
+    if (videoRef.current) {
+      startScanning(videoRef.current);
+    }
     return () => stopScanning();
   }, []);
 
   useEffect(() => {
-    if (videoRef.current) {
-      // Set video element reference for the scanner hook
-      (videoRef.current as any)._scannerRef = true;
+    if (videoRef.current && !isScanning) {
+      startScanning(videoRef.current);
     }
-  }, []);
+  }, [videoRef.current]);
 
   return (
     <div className="relative h-screen bg-black">
