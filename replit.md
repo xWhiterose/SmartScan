@@ -114,11 +114,20 @@ products table:
   - Replaced auto-start camera with central round scan button
   - Button displays mode-specific icons (Utensils for food, PawPrint for pet, Sparkles for beauty)
   - Camera module only appears after user clicks scan button
-  - Improved header with ScanWise brand logo on left, mode buttons on right
+  - Improved header with ScanSmart brand logo on left, mode buttons on right
   - Better icons matching scan modes (Utensils, PawPrint, Sparkles)
   - Fixed footer positioning - now sticky at bottom without interfering with camera
   - Suppressed "Video Stream has ended" error message for better UX
   - Enhanced camera permission error handling with specific user guidance
+- June 17, 2025. Color scheme overhaul and enhanced ripple effects:
+  - Changed color scheme to match logo: Food=orange, Pet=red, Beauty=pink
+  - All text elements now use mode-specific colors (Scan me, instructions)
+  - Enhanced ripple effect with 3 larger, more pronounced concentric circles
+  - Scan button icon significantly enlarged (w-20 h-20) for better visibility
+  - Camera module repositioned under "Searching..." status indicator
+  - Reduced header spacing to prevent title-button collision
+  - Brand name changed from QuickScan to ScanSmart
+  - Added nutritional data swap system for 100g vs total product quantity
 
 ## User Preferences
 
