@@ -102,7 +102,7 @@ export function NutritionalInfo({ calories = 0, fat = 0, sugars = 0, proteins = 
     const swipeDistance = touchStartX.current - touchEndX.current;
     const minSwipeDistance = 50;
 
-    if (Math.abs(swipeDistance) > minSwipeDistance && canShowPerPackage) {
+    if (Math.abs(swipeDistance) > minSwipeDistance) {
       setShowPerPackage(!showPerPackage);
     }
   };
