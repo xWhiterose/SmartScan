@@ -34,7 +34,7 @@
   /* Scan mode colors - matching logo colors */
   --scan-food: hsl(22, 88%, 55%); /* orange */
   --scan-pet: hsl(0, 76%, 58%); /* red */
-  --scan-cosmetic: hsl(330, 81%, 60%); /* pink */
+  --scan-cosmetic: hsl(340, 70%, 50%); /* rose plus proche du logo */
 }
 
 .dark {

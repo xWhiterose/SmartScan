@@ -81,7 +81,7 @@ export function BarcodeScanner({ onScanSuccess, onScanError, scanMode }: Barcode
               <Button
                 onClick={handleStartScan}
                 className={cn(
-                  "w-28 h-28 rounded-full flex items-center justify-center text-white shadow-2xl hover:scale-110 transition-all duration-300 relative z-10 p-0",
+                  "w-24 h-24 rounded-full flex items-center justify-center text-white shadow-2xl hover:scale-110 transition-all duration-300 relative z-10 p-0",
                   bgThemeClass
                 )}
               >

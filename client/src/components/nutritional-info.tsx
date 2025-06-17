@@ -6,9 +6,10 @@ interface NutritionalInfoProps {
   quantity?: string;
 }
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { RotateCcw } from 'lucide-react';
+import { RotateCcw, ArrowLeftRight } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface NutrientCardProps {
   value: number;
@@ -35,6 +36,9 @@ function NutrientCard({ value, label, unit, isPerPackage }: NutrientCardProps) {
 
 export function NutritionalInfo({ calories = 0, fat = 0, sugars = 0, proteins = 0, quantity }: NutritionalInfoProps) {
   const [showPerPackage, setShowPerPackage] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef<number>(0);
+  const touchEndX = useRef<number>(0);
   
   // Extract numeric weight from quantity string (e.g., "250g" -> 250)
   const getPackageWeight = () => {
@@ -65,33 +69,61 @@ export function NutritionalInfo({ calories = 0, fat = 0, sugars = 0, proteins = 
   const displayFat = showPerPackage ? getPackageValue(fat) : fat;
   const displaySugars = showPerPackage ? getPackageValue(sugars) : sugars;
   const displayProteins = showPerPackage ? getPackageValue(proteins) : proteins;
+
+  // Handle touch events for swipe
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    const swipeDistance = touchStartX.current - touchEndX.current;
+    const minSwipeDistance = 50;
+
+    if (Math.abs(swipeDistance) > minSwipeDistance && canShowPerPackage) {
+      setShowPerPackage(!showPerPackage);
+    }
+  };
   
   return (
     <div className="space-y-4">
-      {/* Toggle button */}
+      {/* Swipe indicator */}
       {canShowPerPackage && (
-        <div className="flex justify-center">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setShowPerPackage(!showPerPackage)}
-            className="flex items-center space-x-2"
-          >
-            <RotateCcw className="w-4 h-4" />
-            <span>
-              {showPerPackage ? 'Show per 100g' : `Show per package (${quantity})`}
-            </span>
-          </Button>
+        <div className="flex justify-center items-center space-x-2 text-sm text-muted-foreground">
+          <ArrowLeftRight className="w-4 h-4" />
+          <span>Swipe to switch between 100g and total package values</span>
         </div>
       )}
       
-      {/* Nutritional cards */}
-      <div className="grid grid-cols-2 gap-4">
+      {/* Nutritional cards with swipe support */}
+      <div 
+        ref={containerRef}
+        className={cn(
+          "grid grid-cols-2 gap-3 p-1 rounded-lg transition-all duration-300",
+          canShowPerPackage && "cursor-pointer select-none"
+        )}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onClick={() => canShowPerPackage && setShowPerPackage(!showPerPackage)}
+      >
         <NutrientCard value={displayCalories} label="Calories" unit="" isPerPackage={showPerPackage} />
         <NutrientCard value={displayFat} label="Fat" unit="g" isPerPackage={showPerPackage} />
         <NutrientCard value={displaySugars} label="Sugars" unit="g" isPerPackage={showPerPackage} />
         <NutrientCard value={displayProteins} label="Proteins" unit="g" isPerPackage={showPerPackage} />
       </div>
+
+      {/* Current view indicator */}
+      {canShowPerPackage && (
+        <div className="text-center">
+          <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-muted text-muted-foreground">
+            {showPerPackage ? `Total package (${quantity})` : 'Per 100g'}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
