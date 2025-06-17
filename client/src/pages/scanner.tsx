@@ -100,14 +100,11 @@ export default function Scanner() {
         scanMode={scanMode}
       />
 
-      {/* Footer */}
-      <footer className="bg-card/95 backdrop-blur-sm border-t border-border px-4 py-3 mt-auto">
+      {/* Footer - Fixed at bottom */}
+      <footer className="fixed bottom-0 left-0 right-0 bg-card/90 backdrop-blur-sm border-t border-border px-4 py-2 z-30">
         <div className="max-w-md mx-auto text-center">
-          <p className="text-muted-foreground text-sm">
-            Smart Barcode Scanner
-          </p>
-          <p className="text-muted-foreground text-xs mt-1">
-            Food • Pet • Beauty Products
+          <p className="text-muted-foreground text-xs">
+            Smart Barcode Scanner • Food • Pet • Beauty
           </p>
         </div>
       </footer>

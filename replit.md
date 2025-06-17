@@ -110,6 +110,15 @@ products table:
   - Repositioned loading overlay and instructions higher on screen
   - Added footer with app description
   - Improved overall centering and layout
+- June 17, 2025. Major UX overhaul with central start button:
+  - Replaced auto-start camera with central round scan button
+  - Button displays mode-specific icons (Utensils for food, PawPrint for pet, Sparkles for beauty)
+  - Camera module only appears after user clicks scan button
+  - Improved header with ScanWise brand logo on left, mode buttons on right
+  - Better icons matching scan modes (Utensils, PawPrint, Sparkles)
+  - Fixed footer positioning - now sticky at bottom without interfering with camera
+  - Suppressed "Video Stream has ended" error message for better UX
+  - Enhanced camera permission error handling with specific user guidance
 
 ## User Preferences
 

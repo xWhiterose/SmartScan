@@ -99,7 +99,7 @@ export function BarcodeScanner({ onScanSuccess, onScanError, scanMode }: Barcode
       {showCamera && (
         <>
           {/* Instructions repositionnées plus haut pour mobile */}
-          <div className="absolute bottom-32 left-0 right-0 px-6">
+          <div className="absolute bottom-20 left-0 right-0 px-6">
             <div className="bg-black/60 backdrop-blur-md rounded-2xl p-4 text-center">
               <p className="text-white text-lg font-medium mb-2">
                 Point camera at barcode
