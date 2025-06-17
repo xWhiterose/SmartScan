@@ -13,6 +13,7 @@ export const products = pgTable("products", {
   fat: real("fat"),
   sugars: real("sugars"),
   proteins: real("proteins"),
+  quantity: text("quantity"),
   rawData: json("raw_data"),
 });
 
@@ -31,6 +32,7 @@ export interface OpenFoodFactsProduct {
     brands?: string;
     image_url?: string;
     nutriscore_grade?: string;
+    quantity?: string;
     nutriments?: {
       energy_100g?: number;
       fat_100g?: number;

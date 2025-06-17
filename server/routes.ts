@@ -41,7 +41,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // Create product in storage
         const newProduct = await storage.createProduct({
           barcode,
-          name: data.product.product_name || "Produit inconnu",
+          name: data.product.product_name || "Unknown product",
           brand: data.product.brands,
           imageUrl: data.product.image_url,
           nutriscoreGrade: data.product.nutriscore_grade?.toUpperCase(),
