@@ -33,9 +33,9 @@ export function BarcodeScanner({ onScanSuccess, onScanError, scanMode }: Barcode
   const borderThemeClass = scanMode === 'pet' ? 'border-scan-pet' : scanMode === 'cosmetic' ? 'border-scan-cosmetic' : 'border-scan-nutri';
 
   return (
-    <div className="relative flex-1 overflow-hidden bg-amber-50">
+    <div className="relative flex-1 overflow-hidden bg-background">
       {/* Background pattern or solid color */}
-      <div className="absolute inset-0 bg-gradient-to-br from-amber-25 to-orange-50">
+      <div className="absolute inset-0 bg-gradient-to-br from-background to-muted">
         <div className="absolute inset-0 opacity-10">
           <div className="w-full h-full" style={{
             backgroundImage: `radial-gradient(circle at 25% 25%, rgba(139,69,19,0.1) 1px, transparent 1px)`,
@@ -68,16 +68,16 @@ export function BarcodeScanner({ onScanSuccess, onScanError, scanMode }: Barcode
         </div>
       </div>
 
-      {/* Instructions - repositionnées plus haut */}
-      <div className="absolute bottom-20 left-0 right-0 px-6">
+      {/* Instructions - repositionnées encore plus haut pour mobile */}
+      <div className="absolute bottom-32 left-0 right-0 px-6">
         <div className="bg-black/60 backdrop-blur-md rounded-2xl p-4 text-center">
           <p className="text-white text-lg font-medium mb-2">
-            Pointez la caméra vers le code-barres
+            Point camera at barcode
           </p>
           <p className="text-white/80 text-sm">
-            {scanMode === 'pet' ? 'Scan des produits pour animaux' : 
-             scanMode === 'cosmetic' ? 'Scan des produits cosmétiques' : 
-             'Scan des produits alimentaires'}
+            {scanMode === 'pet' ? 'Scanning pet products' : 
+             scanMode === 'cosmetic' ? 'Scanning beauty products' : 
+             'Scanning food products'}
           </p>
         </div>
       </div>

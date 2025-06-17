@@ -3,16 +3,16 @@
 @tailwind utilities;
 
 :root {
-  --background: hsl(40, 15%, 96%);
+  --background: hsl(45, 8%, 94%);
   --foreground: hsl(210, 40%, 8%);
-  --muted: hsl(35, 12%, 92%);
+  --muted: hsl(40, 6%, 89%);
   --muted-foreground: hsl(215, 16%, 47%);
-  --popover: hsl(40, 15%, 96%);
+  --popover: hsl(45, 8%, 94%);
   --popover-foreground: hsl(210, 40%, 8%);
-  --card: hsl(42, 20%, 98%);
+  --card: hsl(45, 8%, 94%);
   --card-foreground: hsl(210, 40%, 8%);
-  --border: hsl(35, 18%, 88%);
-  --input: hsl(35, 18%, 88%);
+  --border: hsl(40, 8%, 85%);
+  --input: hsl(40, 8%, 85%);
   --primary: hsl(158, 64%, 52%);
   --primary-foreground: hsl(210, 40%, 98%);
   --secondary: hsl(210, 40%, 96%);

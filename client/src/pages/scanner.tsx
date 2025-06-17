@@ -46,7 +46,7 @@ export default function Scanner() {
                 )}
               >
                 <Leaf className="w-3 h-3" />
-                <span className="font-medium">NutriScan</span>
+                <span className="font-medium">Food</span>
               </Button>
               
               <Button
@@ -61,7 +61,7 @@ export default function Scanner() {
                 )}
               >
                 <Heart className="w-3 h-3" />
-                <span className="font-medium">PetScan</span>
+                <span className="font-medium">Pet</span>
               </Button>
               
               <Button
@@ -76,28 +76,11 @@ export default function Scanner() {
                 )}
               >
                 <Sparkles className="w-3 h-3" />
-                <span className="font-medium">CosmeticScan</span>
+                <span className="font-medium">Beauty</span>
               </Button>
             </div>
             
-            {/* Title */}
-            <div className="flex items-center space-x-2">
-              <div className={cn(
-                "w-8 h-8 rounded-lg flex items-center justify-center transition-colors duration-200",
-                scanMode === 'pet' ? "bg-scan-pet" : scanMode === 'cosmetic' ? "bg-scan-cosmetic" : "bg-scan-nutri"
-              )}>
-                {scanMode === 'pet' ? (
-                  <Heart className="text-white w-4 h-4" />
-                ) : scanMode === 'cosmetic' ? (
-                  <Sparkles className="text-white w-4 h-4" />
-                ) : (
-                  <Leaf className="text-white w-4 h-4" />
-                )}
-              </div>
-              <h1 className="text-xl font-semibold text-foreground">
-                {scanMode === 'pet' ? 'PetScan' : scanMode === 'cosmetic' ? 'CosmeticScan' : 'NutriScan'}
-              </h1>
-            </div>
+
           </div>
         </div>
       </header>
@@ -113,10 +96,10 @@ export default function Scanner() {
       <footer className="bg-card/95 backdrop-blur-sm border-t border-border px-4 py-3 mt-auto">
         <div className="max-w-md mx-auto text-center">
           <p className="text-muted-foreground text-sm">
-            Scanner de codes-barres intelligent
+            Smart Barcode Scanner
           </p>
           <p className="text-muted-foreground text-xs mt-1">
-            Alimentaire • Animaux • Cosmétiques
+            Food • Pet • Beauty Products
           </p>
         </div>
       </footer>
