@@ -102,6 +102,14 @@ products table:
   - Implemented color-coded interface with dynamic theming
   - Created streamlined scanner interface without black container
   - Added mode switching via header buttons with visual feedback
+- June 17, 2025. Added CosmeticScan mode and UI improvements:
+  - Added third scanning mode CosmeticScan (pink) for cosmetic products
+  - Implemented inset camera view - only scan area shows camera, rest shows warm background
+  - Fixed mode persistence when returning from error/retry pages
+  - Added warm beige color scheme replacing cold whites
+  - Repositioned loading overlay and instructions higher on screen
+  - Added footer with app description
+  - Improved overall centering and layout
 
 ## User Preferences
 
