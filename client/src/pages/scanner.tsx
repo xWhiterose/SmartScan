@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { BarcodeScanner } from '@/components/barcode-scanner';
 import { LoadingOverlay } from '@/components/loading-overlay';
 import { useLocation } from 'wouter';
-import { Leaf, Heart, Sparkles } from 'lucide-react';
+import { Utensils, PawPrint, Sparkles, Scan } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -32,6 +32,14 @@ export default function Scanner() {
       <header className="bg-card/95 backdrop-blur-sm shadow-sm border-b border-border sticky top-0 z-40">
         <div className="px-4 py-3">
           <div className="flex items-center justify-between">
+            {/* Fake Brand Logo */}
+            <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-gradient-to-r from-scan-nutri to-scan-pet rounded-lg flex items-center justify-center">
+                <Scan className="w-5 h-5 text-white" />
+              </div>
+              <span className="text-lg font-bold text-foreground">ScanWise</span>
+            </div>
+
             {/* Mode Toggle Buttons */}
             <div className="flex items-center space-x-1 bg-muted rounded-xl p-1">
               <Button
@@ -45,7 +53,7 @@ export default function Scanner() {
                     : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                 )}
               >
-                <Leaf className="w-3 h-3" />
+                <Utensils className="w-3 h-3" />
                 <span className="font-medium">Food</span>
               </Button>
               
@@ -60,7 +68,7 @@ export default function Scanner() {
                     : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                 )}
               >
-                <Heart className="w-3 h-3" />
+                <PawPrint className="w-3 h-3" />
                 <span className="font-medium">Pet</span>
               </Button>
               

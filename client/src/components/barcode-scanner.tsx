@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from 'react';
 import { useBarcodeScanner } from '@/hooks/use-barcode-scanner';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { Apple, Heart, Sparkles } from 'lucide-react';
+import { Utensils, PawPrint, Sparkles } from 'lucide-react';
 
 interface BarcodeScannerProps {
   onScanSuccess: (barcode: string) => void;
@@ -37,11 +37,11 @@ export function BarcodeScanner({ onScanSuccess, onScanError, scanMode }: Barcode
   const getScanIcon = () => {
     switch (scanMode) {
       case 'pet':
-        return <Heart className="w-8 h-8 mb-2" />;
+        return <PawPrint className="w-8 h-8 mb-2" />;
       case 'cosmetic':
         return <Sparkles className="w-8 h-8 mb-2" />;
       default:
-        return <Apple className="w-8 h-8 mb-2" />;
+        return <Utensils className="w-8 h-8 mb-2" />;
     }
   };
 

@@ -77,6 +77,9 @@ export function useBarcodeScanner(
           errorMessage = 'No camera found. Please check your device settings.';
         } else if (err.name === 'NotSupportedError') {
           errorMessage = 'Camera not supported on this device.';
+        } else if (err.message.includes('Video stream has ended')) {
+          // Ignore this error - it's expected behavior when stopping the scanner
+          return;
         } else {
           errorMessage = err.message;
         }
