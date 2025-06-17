@@ -33,10 +33,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
         
         // Extract nutritional data
+        console.log('Nutriments data:', JSON.stringify(data.product.nutriments, null, 2));
         const calories = data.product.nutriments?.energy_100g ? Math.round(data.product.nutriments.energy_100g / 4.184) : 0;
         const fat = data.product.nutriments?.fat_100g || 0;
         const sugars = data.product.nutriments?.sugars_100g || 0;
         const proteins = data.product.nutriments?.proteins_100g || 0;
+        console.log('Extracted values:', { calories, fat, sugars, proteins });
         
         // Create product in storage
         const newProduct = await storage.createProduct({

@@ -64,20 +64,7 @@ export function BarcodeScanner({ onScanSuccess, onScanError, scanMode }: Barcode
           /* Central start button with ripple effect */
           <div className="relative flex flex-col items-center">
             {/* Enhanced ripple effect layers centered on button only */}
-            <div className="relative">
-              <div className={cn(
-                "absolute w-40 h-40 rounded-full opacity-40 animate-ping -top-20 -left-20",
-                bgThemeClass
-              )} style={{ animationDuration: '1.5s' }}></div>
-              <div className={cn(
-                "absolute w-56 h-56 rounded-full opacity-30 animate-ping -top-28 -left-28",
-                bgThemeClass
-              )} style={{ animationDuration: '2s', animationDelay: '0.3s' }}></div>
-              <div className={cn(
-                "absolute w-72 h-72 rounded-full opacity-20 animate-ping -top-36 -left-36",
-                bgThemeClass
-              )} style={{ animationDuration: '2.5s', animationDelay: '0.6s' }}></div>
-              
+            <div className="relative flex items-center justify-center">
               <Button
                 onClick={handleStartScan}
                 className={cn(
@@ -85,8 +72,41 @@ export function BarcodeScanner({ onScanSuccess, onScanError, scanMode }: Barcode
                   bgThemeClass
                 )}
               >
-                {getScanIcon()}
+                <div className="w-14 h-14 flex items-center justify-center">
+                  {getScanIcon()}
+                </div>
               </Button>
+              
+              {/* Ripple effects positioned absolutely from button center */}
+              <div className={cn(
+                "absolute w-40 h-40 rounded-full opacity-40 animate-ping",
+                bgThemeClass
+              )} style={{ 
+                animationDuration: '1.5s',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)'
+              }}></div>
+              <div className={cn(
+                "absolute w-56 h-56 rounded-full opacity-30 animate-ping",
+                bgThemeClass
+              )} style={{ 
+                animationDuration: '2s', 
+                animationDelay: '0.3s',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)'
+              }}></div>
+              <div className={cn(
+                "absolute w-72 h-72 rounded-full opacity-20 animate-ping",
+                bgThemeClass
+              )} style={{ 
+                animationDuration: '2.5s', 
+                animationDelay: '0.6s',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)'
+              }}></div>
             </div>
             
             {/* "Scan me" text below button */}

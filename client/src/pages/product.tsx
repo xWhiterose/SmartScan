@@ -92,7 +92,7 @@ export default function Product({ params }: ProductPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="h-screen bg-background overflow-hidden">
       <LoadingOverlay isVisible={isLoading} />
       
       {product && (

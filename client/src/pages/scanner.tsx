@@ -27,7 +27,7 @@ export default function Scanner() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="h-screen bg-background flex flex-col overflow-hidden">
       {/* Header with dual mode buttons */}
       <header className="bg-card/95 backdrop-blur-sm shadow-sm border-b border-border sticky top-0 z-40">
         <div className="px-3 py-2">
